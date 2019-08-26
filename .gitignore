@@ -29,3 +29,11 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/java/com/qfedu/dt/controller/
+src/main/java/com/qfedu/dt/dao/
+src/main/java/com/qfedu/dt/entity/
+src/main/java/com/qfedu/dt/service/
+src/main/java/com/qfedu/dt/utils/
+src/main/resources/mapper/
+src/main/resources/static/
+src/main/resources/templates/
