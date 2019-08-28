@@ -4,6 +4,7 @@ target/
 !**/src/main/**
 !**/src/test/**
 !.gitignore
+!.gitkeep
 
 ### STS ###
 .apt_generated
