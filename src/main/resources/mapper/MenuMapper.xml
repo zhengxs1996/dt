@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qfedu.dt.dao.MenuDao">
+    <resultMap id="MenuMap" type="com.qfedu.dt.vo.MenuList">
+        <result column="pname" property="pname"/>
+        <collection property="cmenu" javaType="list" ofType="Cmenu">
+            <result column="cname" property="cname"/>
+            <result column="url" property="url"/>
+        </collection>
+    </resultMap>
+    
+    <select id="MenuList" resultMap="MenuMap">
+        select distinct p.pid id, p.resource_name pname, c.resource_name cname, c.url
+        from permision p
+                 inner join permision c on p.pid = c.parent_id
+                 inner join role_permision rp on c.pid = rp.pid
+                 inner join user_role ur on ur.rid = rp.rid
+        where ur.uid = 1
+          and c.resource_type = 'menu';
+    </select>
+</mapper>
