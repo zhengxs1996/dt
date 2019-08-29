@@ -1,5 +1,6 @@
 package com.qfedu.dt.config;
 
+import com.qfedu.dt.filter.MyShiroLogoutFilter;
 import com.qfedu.dt.realm.MyRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
@@ -7,16 +8,29 @@ import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
 @Configuration
 public class ShiroConfig {
+
+
+    @Value("${spring.redis.host}")
+    private String host;
+
+    @Value("${spring.redis.port}")
+    private int port;
+
     // shiro资源过滤配置
     // 设置哪些资源可以匿名访问，哪些资源需要经过认证才能访问，哪些资源需要指定的权限才能访问等等
     @Bean(name = "shiroFilter")
@@ -27,6 +41,12 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setLoginUrl("/login");
         // 当没有权限访问某些资源时，跳转到的资源
         shiroFilterFactoryBean.setUnauthorizedUrl("/notPermision");
+
+        //存放自定义filter
+        LinkedHashMap<String, Filter> filtersMap=new LinkedHashMap<>();
+        //配置自定义登出，覆盖logout之前默认的logoutFilter
+        filtersMap.put("logout",shiroLogoutFilter());
+        shiroFilterFactoryBean.setFilters(filtersMap);
 
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // authc:必须认证通过才可以访问;
@@ -39,6 +59,8 @@ public class ShiroConfig {
 
         filterChainDefinitionMap.put("/admin/**", "authc");
         filterChainDefinitionMap.put("/user/**", "authc");
+
+        filterChainDefinitionMap.put("/logout","logout");
 
         // perms 配置权限
         //filterChainDefinitionMap.put("/list", "perms[user:add]");
@@ -57,6 +79,8 @@ public class ShiroConfig {
         DefaultWebSecurityManager defaultSecurityManager = new DefaultWebSecurityManager();
         // 设置realm对象
         defaultSecurityManager.setRealm(customRealm());
+        // 自定义缓存实现 使用redis
+        defaultSecurityManager.setCacheManager(cacheManager());
         return defaultSecurityManager;
     }
 
@@ -69,7 +93,7 @@ public class ShiroConfig {
         return customRealm;
     }
 
-    // -------------------使用注解时需要增加的配置 -----------------
+    // -------------------使用shiro注解时需要增加的配置 -----------------
     // 如果不使用redis做缓存，不需要static修饰符
     @Bean
     public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
@@ -102,5 +126,30 @@ public class ShiroConfig {
         // storedCredentialsHexEncoded默认是true，此时用的是密码加密用的是Hex编码；false时用Base64编码
         hashedCredentialsMatcher.setStoredCredentialsHexEncoded(true);
         return hashedCredentialsMatcher;
+    }
+
+
+    public RedisManager redisManager() {
+        RedisManager redisManager = new RedisManager();
+        System.out.println(host);
+        redisManager.setHost(host);
+        redisManager.setPort(port);
+
+        return redisManager;
+    }
+
+
+    public RedisCacheManager cacheManager() {
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        redisCacheManager.setRedisManager(redisManager());
+        // 配置过期时间
+//        redisCacheManager.setExpire(1800);
+        return redisCacheManager;
+    }
+
+    public MyShiroLogoutFilter shiroLogoutFilter(){
+        MyShiroLogoutFilter filter = new MyShiroLogoutFilter();
+        filter.setRedirectUrl("/toLogin");
+        return filter;
     }
 }

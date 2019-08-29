@@ -26,6 +26,7 @@ public class LoginController {
     @RequestMapping("/login")
     @ResponseBody
     public JsonResult login(String username, String password){
+
         //根据用户输入的用户名和密码信息创建token对象，用于和合法认证信息进行比较
         UsernamePasswordToken token=new UsernamePasswordToken(username,password);
         //获取Subject主题对象
