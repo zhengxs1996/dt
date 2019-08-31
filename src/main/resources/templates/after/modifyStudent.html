@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" />
+    <script type="text/javascript" th:src="@{/layui/layui.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/jquery-1.12.2.min.js}" ></script>
+    <script type="text/javascript" th:src="@{vue.min.js}" ></script>
+</head>
+<body>
+<div style="margin-left:40px;margin-top: 30px">
+    <form class="layui-form" id="add-form" action="" lay-filter="modifyForm">
+        <div class="layui-form-item" style="margin-top: 10px">
+            <label class="layui-form-label" style="width: 90px">学生姓名</label>
+            <div class="layui-input-block" >
+                <input  type="text" name="sname" id="sname" required  lay-verify="required"  th:value="${student.sname}" autocomplete="off" style="width: 240px" class="layui-input">
+                <input  type="text" name="sid" id="sid" required  lay-verify="required"  th:value="${student.sid}" autocomplete="off" style="width: 240px" class="layui-input" th:type="hidden">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-top: 10px">
+            <label class="layui-form-label" style="width: 90px">邮箱</label>
+            <div class="layui-input-block">
+                <input type="text" name="email" id="email" required style="width: 240px" th:value="${student.email}" lay-verify="required"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-top: 10px">
+            <label class="layui-form-label" style="width: 90px">密码</label>
+            <div class="layui-input-block">
+                <input type="text" name="password" id="password" required style="width: 240px" th:value="${student.password}" lay-verify="required"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-top: 10px">
+            <label class="layui-form-label" style="width: 90px">手机号</label>
+            <div class="layui-input-block">
+                <input type="text" name="phone" id="phone" required style="width: 240px" th:value="${student.phone}" lay-verify="required"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="save" >保存</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    layui.use(['layer','form'],function () {
+        var layer = layui.layer
+            ,form = layui.form
+        // $.ajax({
+        //     type:"get",
+        //     url:"student/findStudentById.do",
+        //     data:{"id":"${param.id}"},
+        //     dataType:"json",
+        //     success:function (data) {
+        //         if(data.code == 0){
+        //             form.val('modifyForm',data.info);
+        //         }else{
+        //             alert(data.info);
+        //         }
+        //     }
+        // })
+        form.on('submit(save)', function(data){
+            $.ajax({
+                type:"post",
+                url:"modifyStudent.do",
+                data:data.field,
+                dataType:"json",
+                success:function(data){  //{code:1,info:....}
+                    if(data.code == 0){
+                        layer.msg("修改成功")
+                        var t = parent.layui.table;
+                        t.reload('studentTable');// 重新加载页面,demo 表示父窗体table标签的id值
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                    }else{
+                        layer.msg(data.info);
+                    }
+                },
+                error:function (data) {
+                    alert("ajax:error")
+                }
+            })
+            // 阻止默认的提交
+            return false;
+        });
+
+
+    })
+
+</script>
+</body>
+</html>

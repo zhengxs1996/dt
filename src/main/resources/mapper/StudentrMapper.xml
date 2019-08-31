@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qfedu.dt.dao.StudentDao">
+
+    <!--public List<Student> findAllStudent();-->
+    <select id="findAllStudent" parameterType="string" resultType="student">
+        select * from student
+        <where>
+        <if test="sname != null and sname!= ''">
+            and sname = #{sname}
+        </if>
+    </where>
+    </select>
+
+    <!--public void addStudent(Student student);-->
+    <insert id="addStudent" parameterType="student">
+        insert into student(sname, email, password, phone) values (#{sname},#{email},#{password},#{phone})
+    </insert>
+
+    <!--public Student findStudentById(Integer sid);-->
+    <select id="findStudentById" parameterType="int" resultType="student">
+        select * from student where sid = #{sid};
+    </select>
+
+    <!--public void modifyStudent(Student student);-->
+    <update id="modifyStudent" parameterType="student">
+        update student
+        <set>
+            <if test="sname != null">
+                sname=#{sname},
+            </if>
+            <if test="email != null">
+                email=#{email},
+            </if>
+            <if test="password != null">
+                password=#{password},
+            </if>
+            <if test="phone != null">
+                phone=#{phone},
+            </if>
+        </set>
+        where sid=#{sid};
+    </update>
+
+    <!--public void deleteStudent(Integer sid);-->
+    <delete id="deleteStudent" parameterType="int">
+        delete  from student where sid =#{sid};
+    </delete>
+</mapper>
