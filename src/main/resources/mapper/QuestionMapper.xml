@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qfedu.dt.dao.SelectQuestionsDao">
+
+    <select id="findAll" resultType="com.qfedu.dt.vo.Selects">
+        select s.*,c.cName from dt.selectquestions s inner join course c on s.courseId = c.cId
+        <where>
+            <if test="keyWord != null and keyWord != ''">
+                AND s.question like concat(concat("%",#{param1}),"%")
+            </if>
+            <if test="courseId != null and courseId != ''">
+                AND s.courseId = #{param2}
+            </if>
+            <if test="level != null and level != ''">
+                AND s.level = #{param3}
+            </if>
+        </where>
+    </select>
+    
+    <select id="findAllCourse" resultType="course">
+        select * from course
+    </select>
+
+    <delete id="deleteOneSelect" parameterType="Integer">
+        delete from selectquestions where mId = #{id}
+    </delete>
+
+    <delete id="deleteAllSelect" parameterType="map">
+        delete from selectquestions where mId in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
