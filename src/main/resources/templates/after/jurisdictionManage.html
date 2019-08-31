@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #content{
+            margin:20px auto;
+        }
+    </style>
+    <!--th:href="@{/layui/css/layui.css}-->
+    <!--th:src="@{/layui/layui.js}-->
+    <!--th:src="@{/js/jquery-1.12.2.min.js}-->
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" />
+    <script type="text/javascript" th:src="@{/layui/layui.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/jquery-1.12.2.min.js}" ></script>
+</head>
+<body>
+<div id="content">
+    <table class="layui-hide" id="roleTable" lay-filter="test"></table>
+
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    </script>
+
+</div>
+<script type="text/html" id="indexTpl">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
+
+<script>
+    layui.use(['laypage', 'layer', 'table', 'element','form'], function(){
+        var $ = layui.jquery
+            , layer = layui.layer //弹层
+            ,table = layui.table //表格
+            ,element = layui.element //元素操作
+            ,form = layui.form
+
+
+        //执行一个 table 实例
+        table.render({
+            elem: '#roleTable'
+            ,height: 420
+            ,url: 'findAllRole.do' //数据接口
+            ,title: '角色表'
+            ,cols: [
+                [ //表头
+                     {field: 'rid', title: 'rid'}
+                    ,{templet: '#indexTpl', align:'center', title: '序号', width:80,totalRowText: '合计：'}
+                    ,{field: 'rolename', align:'center', title: '学生姓名', width:200}
+                    ,{title: '操作', width: 125, align:'center', toolbar: '#barDemo'}
+                ]
+            ]
+            ,id:'roleTable'
+            ,done: function (res) {
+                //数据总条数,res为url接口传回的数据
+                //totalNum =res.total
+                $("[data-field='rid']").css('display', 'none');
+            }
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var rowData = obj.data //获得当前行数据
+                ,layEvent = obj.event //获得 lay-event 对应的值
+                ,tr = obj.tr;
+           if(layEvent === 'edit'){
+                layer.open({
+                    type: 2,
+                    area:['500px', '450px'],
+                    title: "更改权限",
+                    fixed: false, //不固定
+                    maxmin: true,
+                    maxmin: false,
+                    content:'jumpModify.do?rid=' + rowData.rid
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

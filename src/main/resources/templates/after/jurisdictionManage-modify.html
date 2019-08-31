@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<HTML xmlns:th="http://www.thymeleaf.org">
+<HEAD>
+    <TITLE> ZTREE DEMO - checkbox</TITLE>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!--<link rel="stylesheet" href="css/demo.css" type="text/css">-->
+    <link rel="stylesheet" th:href="@{/css/zTreeStyle/zTreeStyle.css}" type="text/css">
+    <script type="text/javascript" th:src="@{/js/jquery-1.12.2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.ztree.core.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.ztree.excheck.js}"></script>
+
+
+    <SCRIPT type="text/javascript">
+        function zTreeOnCheck(event, treeId, treeNode) {
+            //alert(treeNode.tId + ", " + treeNode.name + "," + treeNode.checked);
+        };
+        var setting = {
+            check: {
+                enable: true
+            },
+            callback: {
+                //beforeCheck:zTreeBeforeCheck,
+                onCheck: zTreeOnCheck
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+
+        function zTreeOnClick(event, treeId, treeNode) {       //第二步
+            var treeObj = $.fn.zTree.getZTreeObj("treeDemo"),
+                nodes = treeObj.getCheckedNodes(true),
+                v = "";
+            for (var i = 0; i < nodes.length; i++) {
+                v += nodes[i].name + ",";
+                console.log("节点id:" + nodes[i].id + "节点名称" + v); //获取选中节点的值
+            }
+
+        var zNodes;
+        $.ajax({
+            type:"post",
+            url:"findAll.do",
+            dataType:"json",
+            success:function (data) {
+                zNodes =  data.info;
+                $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+                getChecked()
+            }
+        })
+
+        var code;
+
+        function setCheck() {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+                py = $("#py").attr("checked")? "p":"",
+                sy = $("#sy").attr("checked")? "s":"",
+                pn = $("#pn").attr("checked")? "p":"",
+                sn = $("#sn").attr("checked")? "s":"",
+                type = { "Y":py + sy, "N":pn + sn};
+            zTree.setting.check.chkboxType = type;
+            showCode('setting.check.chkboxType = { "Y" : "' + type.Y + '", "N" : "' + type.N + '" };');
+        }
+
+        function showCode(str) {
+            if (!code) code = $("#code");
+            code.empty();
+            code.append("<li>"+str+"</li>");
+        }
+
+
+        $(document).ready(function(){
+            setCheck();
+            $("#py").bind("change", setCheck);
+            $("#sy").bind("change", setCheck);
+            $("#pn").bind("change", setCheck);
+            $("#sn").bind("change", setCheck);
+        });
+
+        function getChecked() {
+            var rid = document.getElementById("rid").value;
+            $.ajax({
+                type:"post",
+                url: "getChecked.do",
+                data:{"rid":rid},
+                dataType: "json",
+                success:function (data) {
+                    var result = data.info;
+
+                    for (var i = 0;i < result.length;i++) {
+                        zTree = $.fn.zTree.getZTreeObj("treeDemo"); //
+                        zTree.checkNode(zTree.getNodeByParam("id", result[i]), true); //根据id在ztree的复选框中实现自动勾选
+                    }
+                 }
+            })
+        }
+
+
+    </SCRIPT>
+</HEAD>
+
+<BODY>
+<div class="content_wrap" style="margin-left: 150px">
+    <input  type="text" name="rid" id="rid" required  lay-verify="required"  th:value="${rid}" autocomplete="off" style="width: 240px" class="layui-input" th:type="hidden">
+
+    <div class="zTreeDemoBackground left" >
+        <ul id="treeDemo" class="ztree"></ul>
+        <a class="layui-btn layui-btn-normal" data-method="setTop">提交</a>
+    </div>
+</div>
+</BODY>
+</HTML>
