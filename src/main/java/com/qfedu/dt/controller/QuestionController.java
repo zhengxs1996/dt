@@ -23,11 +23,24 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
+    /**
+     * 单选题管理页面跳转
+     * @return
+     */
     @RequestMapping("/selectManager")
     public String selectQuestions() {
         return "after/selectQuestions";
     }
 
+    /**
+     * 单选题管理页面初始，搜索，筛选访问的资源
+     * @param page
+     * @param limit
+     * @param keyWord
+     * @param courseId
+     * @param level
+     * @return
+     */
     @RequestMapping("/selectList")
     @ResponseBody
     public Map<String, Object> selectList(Integer page, Integer limit, String keyWord, Integer courseId, String level) {
@@ -41,6 +54,10 @@ public class QuestionController {
         return map;
     }
 
+    /**
+     * 查询所有课程信息
+     * @return
+     */
     @RequestMapping("/findAllCourse.do")
     @ResponseBody
     public JsonResult findAllCourse() {
@@ -48,6 +65,11 @@ public class QuestionController {
         return new JsonResult(1, allCourse);
     }
 
+    /**
+     * 删除指定一条单选题
+     * @param id
+     * @return
+     */
     @RequestMapping("/deleteOneSelect")
     @ResponseBody
     public JsonResult deleteVideo(Integer id) {
@@ -59,6 +81,11 @@ public class QuestionController {
         }
     }
 
+    /**
+     * 批量删除单选题
+     * @param id
+     * @return
+     */
     @RequestMapping("/deleteAllSelect")
     @ResponseBody
     public JsonResult deleteAll(@RequestParam(value="id[]") Integer[] id) {
@@ -69,4 +96,14 @@ public class QuestionController {
             return new JsonResult(0, e.getMessage());
         }
     }
+
+    /**
+     * 跳转试题批量导入页面
+     * @return
+     */
+    @RequestMapping("/addQuestions")
+    public String addSelect() {
+        return "after/addQuestions";
+    }
+
 }
