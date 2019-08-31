@@ -43,4 +43,9 @@ public class StudentServiceImpl implements StudentService {
         studentDao.deleteStudent(sid);
 
     }
+
+    @Override
+    public void deleteMany(Integer[] sids) {
+        studentDao.deleteMany(sids);
+    }
 }

@@ -18,4 +18,6 @@ public interface StudentService {
     public void modifyStudent(Student student);
     //删除学生信息
     public void deleteStudent(Integer sid);
+    //批量删除
+    public void deleteMany(Integer[] sids);
 }

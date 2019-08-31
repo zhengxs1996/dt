@@ -76,6 +76,7 @@
             }
             ,cols: [
                 [ //表头
+                 {type: 'checkbox',id:'selectAll'}
                 ,{field: 'sid', title: 'sid'}
                 ,{templet: '#indexTpl', align:'center', title: '序号', width:80,totalRowText: '合计：'}
                ,{field: 'sname', align:'center', title: '学生姓名', width:200}
@@ -106,7 +107,62 @@
                 });
             },
 
-            setTop: function(){
+            //批量删除
+            getCheckData: function () {
+                var checkStatus = table.checkStatus('studentTable'),
+                    data = checkStatus.data;
+                if (data == "") {
+                    layer.msg("至少要选一个", {icon: 2});
+                    return;
+                }
+                var sids = "";
+                if (data.length > 0) {
+                    var l = data.length;
+                    for (var i = 0; i < data.length; i++) {
+                        sids += data[i].sid + ",";
+                    }
+                }
+
+                //获取当前页码
+                var currPage = $(".layui-laypage-skip").find("input").val()
+                //获取分页数据条数
+                var  pageInfo = $(".layui-laypage-limits").find("option:selected").val()
+                //获取总页数
+                var  recodeCount = $(".layui-laypage-count").text();
+                var  recodeCount = recodeCount.replace(/[^0-9]/ig,"");
+                var  totalPageNum = Math.ceil(recodeCount/pageInfo)
+                var  lastNum = recodeCount%pageInfo
+
+                layer.confirm('确定删除所选的'+l +'个选项吗？', function (index) {
+                    $.ajax({
+                        type: 'post',
+                        url: "deleteMany.do",
+                        data: {"sids": sids},
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.code === 0) {
+                                layer.msg('删除成功', {icon: 1});
+                                当前所在的页码
+                                if (totalPageNum == currPage && (pageInfo == l||lastNum == l))  {
+                                    table.reload('studentTable',{page:{curr:currPage - 1}})
+                                    $("#checkedNum").html("0");
+                                }  else{
+                                    $(".layui-laypage-btn").click();
+                                    $("#checkedNum").html("0");
+                                }
+                            } else {
+                                layer.msg('删除失败');
+                            }
+                        },
+                        'error': function () {
+                            layer.msg('系统错误');
+                        }
+                    })
+                })
+            },
+
+
+            offset: function(){
                 var that = this;
                 //多窗口模式，层叠置顶
                 layer.open({

@@ -86,4 +86,12 @@ public class StudentController {
         JsonResult jsonResult = new JsonResult(0,null);
         return jsonResult;
     }
+
+    @ResponseBody
+    @RequestMapping("/deleteMany.do")
+    public JsonResult deleteMany(Integer[] sids){
+        studentService.deleteMany(sids);
+        JsonResult jsonResult = new JsonResult(0,null);
+        return jsonResult;
+    }
 }

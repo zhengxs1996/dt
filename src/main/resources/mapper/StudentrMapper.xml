@@ -49,4 +49,11 @@
     <delete id="deleteStudent" parameterType="int">
         delete  from student where sid =#{sid};
     </delete>
+
+    <delete id="deleteMany" parameterType="map">
+        delete from student where sid in
+        <foreach  collection="array" item="sid" open="(" close=")" separator=",">
+            #{sid}
+        </foreach>
+    </delete>
 </mapper>
