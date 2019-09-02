@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -98,12 +99,25 @@ public class QuestionController {
     }
 
     /**
-     * 跳转试题批量导入页面
+     * 单选题批量导入
      * @return
      */
-    @RequestMapping("/addQuestions")
-    public String addSelect() {
-        return "after/addQuestions";
+    @RequestMapping("/uploadSelect")
+    @ResponseBody
+    public Map<String, Object> uploadSelect(@RequestParam("file") MultipartFile file) {
+
+        questionService.uploadSelect(file);
+
+        HashMap<Object, Object> data = new HashMap<>();
+        data.put("src", "http://cdn.layui.com/123.jpg");
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("code", 0);
+        map.put("msg", "上传成功");
+        map.put("data", data);
+
+        return map;
+
     }
 
 }
