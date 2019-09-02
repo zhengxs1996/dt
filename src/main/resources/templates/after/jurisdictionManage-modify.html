@@ -16,6 +16,7 @@
             var $ = layui.jquery
                 , layer = layui.layer //弹层
                 , element = layui.element //元素操作
+
             var setting = {
                 check: {
                     enable: true
@@ -48,8 +49,8 @@
                     pn = $("#pn").attr("checked") ? "p" : "",
                     sn = $("#sn").attr("checked") ? "s" : "",
                     type = {"Y": py + sy, "N": pn + sn};
-                zTree.setting.check.chkboxType = type;
-                showCode('setting.check.chkboxType = { "Y" : "' + type.Y + '", "N" : "' + type.N + '" };');
+                    zTree.setting.check.chkboxType = type;
+                    showCode('setting.check.chkboxType = { "Y" : "' + type.Y + '", "N" : "' + type.N + '" };');
             }
 
             function showCode(str) {

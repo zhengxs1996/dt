@@ -61,8 +61,6 @@ public class MyRealm extends AuthorizingRealm {
             // 如果使用md5进行处理，使用slat值的情况下，需要创建对象时，通过第三个参数指定slat值
 //            simpleAuthenticationInfo = new SimpleAuthenticationInfo(username, user.getPassword(), ByteSource.Util.bytes("haha"), this.getName());
         }
-
-
         return simpleAuthenticationInfo;
     }
 
