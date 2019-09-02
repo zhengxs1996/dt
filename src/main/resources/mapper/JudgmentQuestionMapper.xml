@@ -33,6 +33,13 @@
         </foreach>
     </delete>
 
-
+    <insert id="addAll" parameterType="list" >
+        insert into ynquestions (courseId, question, answer, level)
+        values
+        <foreach collection="list" item="jq" separator=",">
+            (#{jq.courseId},#{jq.question},#{jq.answer},
+            #{jq.level})
+        </foreach>
+    </insert>
 
 </mapper>

@@ -11,6 +11,7 @@ import com.qfedu.dt.entity.SelectQuestions;
 import com.qfedu.dt.service.JudgmentQuestionService;
 import com.qfedu.dt.service.QuestionService;
 
+import com.qfedu.dt.untils.ExcelUtils;
 import com.qfedu.dt.vo.Judgment;
 import com.qfedu.dt.vo.Selects;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,31 @@ public class JudgmentQuestionServiceImpl implements JudgmentQuestionService {
         judgmentQuestionsDao.deleteAllJudgment(id);
 
 
+    }
+
+    @Override
+    public void uploadJudgment(MultipartFile upfile) {
+        try {
+            InputStream inputStream = upfile.getInputStream();
+
+            //文件名
+            String originalFilename = upfile.getOriginalFilename();
+
+            List<Map<String, Object>> list = ExcelUtils.readExcel(inputStream, originalFilename);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            //将List转成json格式数据
+            String jsonStr = objectMapper.writeValueAsString(list);
+            //将json格式数据转成指定对象
+            List<JudgmentQuestions> sqList = objectMapper.readValue(jsonStr, new TypeReference<List<JudgmentQuestions>>(){
+            });
+
+            //将选择题对象集合存入数据库
+            judgmentQuestionsDao.addAll(sqList);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

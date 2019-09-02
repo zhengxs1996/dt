@@ -5,7 +5,7 @@ package com.qfedu.dt.entity;
  */
 public class JudgmentQuestions {
     private Integer yId;
-    private String courseld;
+    private Integer courseId;
     private String question;
     private String answer;
     private String level;
@@ -18,12 +18,12 @@ public class JudgmentQuestions {
         this.yId = yId;
     }
 
-    public String getCourseld() {
-        return courseld;
+    public Integer getCourseId() {
+        return courseId;
     }
 
-    public void setCourseld(String courseld) {
-        this.courseld = courseld;
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
     }
 
     public String getQuestion() {

@@ -22,4 +22,6 @@ public interface JudgmentQuestionService {
     //批量删除
     public void deleteAllJudgment(Integer[] id);
 
+    public void uploadJudgment(MultipartFile file);
+
 }

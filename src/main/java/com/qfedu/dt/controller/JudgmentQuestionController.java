@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -100,12 +101,21 @@ public class JudgmentQuestionController {
     }
 
     /**
-     * 跳转试题批量导入页面
+     * 判断题批量导入
      * @return
      */
-    @RequestMapping("/addJudgment")
-    public String addJudgment() {
-        return "after/addQuestions";
+    @RequestMapping("/uploadJudgment")
+    @ResponseBody
+    public Map<String, Object> uploadJudgment(@RequestParam("file") MultipartFile file) {
+
+        judgmentQuestionService.uploadJudgment(file);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("code", 0);
+        map.put("msg", "上传成功");
+
+        return map;
+
     }
 
 }

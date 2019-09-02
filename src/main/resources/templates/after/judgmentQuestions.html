@@ -63,7 +63,8 @@
             , laypage = layui.laypage //分页
             , layer = layui.layer //弹层
             , table = layui.table //表格
-            , element = layui.element; //元素操作
+            , element = layui.element //元素操作
+            , upload = layui.upload;
 
         var countNum;
 
@@ -323,14 +324,25 @@
         //选完文件后不自动上传
         upload.render({
             elem: '#test8'
-            ,url: '/uploadSelect/'
+            ,url: 'uploadJudgment'
             ,auto: false
             //,multiple: true
             ,bindAction: '#test9'
             ,accept: 'file' //普通文件
             ,exts: 'xlsx|xls' //只允许上传压缩文件
+            ,size: 60 //限制文件大小，单位 KB
             ,done: function(res){
-                console.log(res)
+                layer.alert('批量上传成功', {
+                    skin: 'layui-layer-molv' //样式类名  自定义样式
+                    ,closeBtn: 1    // 是否显示关闭按钮
+                    ,anim: 1 //动画类型
+                    ,btn: ['确定'] //按钮
+                    ,icon: 6    // icon
+                    // ,btn1:function(){
+                    //     location.reload();
+                    // }
+                })
+                console.log(res.msg);
             }
         });
 
