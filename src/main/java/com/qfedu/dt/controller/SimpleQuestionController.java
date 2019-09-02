@@ -2,16 +2,15 @@ package com.qfedu.dt.controller;
 
 import com.github.pagehelper.Page;
 import com.qfedu.dt.common.JsonResult;
-import com.qfedu.dt.service.JudgmentQuestionService;
 import com.qfedu.dt.service.QuestionService;
 import com.qfedu.dt.service.SimpleQuestionsService;
-import com.qfedu.dt.vo.Judgment;
 import com.qfedu.dt.vo.Simple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -100,12 +99,17 @@ public class SimpleQuestionController {
     }
 
     /**
-     * 跳转试题批量导入页面
+     * 判断题批量导入
      * @return
      */
-    @RequestMapping("/addSimple")
-    public String addJudgment() {
-        return "after/addQuestions";
+    @RequestMapping("/uploadSimple")
+    @ResponseBody
+    public Map<String, Object> uploadSimple(@RequestParam("file") MultipartFile file) {
+        simpleQuestionsService.uploadSimple(file);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("code", 0);
+        map.put("msg", "上传成功");
+        return map;
     }
 
 }

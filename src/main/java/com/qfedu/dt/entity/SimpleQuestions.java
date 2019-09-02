@@ -2,15 +2,6 @@ package com.qfedu.dt.entity;
 
 public class SimpleQuestions {
     private Integer saqId;
-
-    public String getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
-    }
-
     private String courseId;
     private String question;
     private String answer;
@@ -22,6 +13,14 @@ public class SimpleQuestions {
 
     public void setSaqId(Integer saqId) {
         this.saqId = saqId;
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
     public String getQuestion() {

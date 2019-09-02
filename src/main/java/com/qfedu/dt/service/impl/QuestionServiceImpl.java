@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.qfedu.dt.dao.SelectQuestionsDao;
 import com.qfedu.dt.entity.Course;
-import com.qfedu.dt.entity.JudgmentQuestions;
 import com.qfedu.dt.entity.SelectQuestions;
 import com.qfedu.dt.service.QuestionService;
 import com.qfedu.dt.untils.ExcelUtils;
@@ -73,8 +72,6 @@ public class QuestionServiceImpl implements QuestionService {
 
             //将选择题对象集合存入数据库
             selectQuestionsDao.addAll(sqList);
-
-//            System.out.println(sqList);
 
         } catch (IOException e) {
             e.printStackTrace();

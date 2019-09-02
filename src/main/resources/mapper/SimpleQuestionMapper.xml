@@ -33,6 +33,13 @@
         </foreach>
     </delete>
 
-
+    <insert id="addAll" parameterType="list" >
+        insert into saquestion (courseId, question, answer, level)
+        values
+        <foreach collection="list" item="sq" separator=",">
+            (#{sq.courseId},#{sq.question},#{sq.answer},
+            #{sq.level})
+        </foreach>
+    </insert>
 
 </mapper>
