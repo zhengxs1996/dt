@@ -2,6 +2,7 @@ package com.qfedu.dt.dao;
 
 import com.qfedu.dt.entity.Course;
 import com.qfedu.dt.entity.JudgmentQuestions;
+import com.qfedu.dt.entity.SelectQuestions;
 import com.qfedu.dt.vo.Selects;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,5 +17,7 @@ public interface SelectQuestionsDao {
     public void deleteOneSelect(Integer id);
 
     public void deleteAllSelect(Integer[] id);
+
+    public void addAll(List<SelectQuestions> list);
 
 }

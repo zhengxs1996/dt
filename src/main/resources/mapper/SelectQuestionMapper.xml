@@ -35,4 +35,14 @@
         </foreach>
     </delete>
 
+    <insert id="addAll" parameterType="list" >
+        insert into selectquestions (courseId, question, optionA, optionB, optionC, optionD, answer, level)
+        values
+        <foreach collection="list" item="sq" separator=",">
+            (#{sq.courseId},#{sq.question},#{sq.optionA},
+            #{sq.optionB},#{sq.optionC},#{sq.optionD},
+            #{sq.answer},#{sq.level})
+        </foreach>
+    </insert>
+
 </mapper>
