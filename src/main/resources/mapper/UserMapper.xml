@@ -4,21 +4,39 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.qfedu.dt.dao.UserDao">
+    <resultMap id="userMap" type="com.qfedu.dt.vo.UserList">
+        <result column="uid" property="uid"></result>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <collection property="role" javaType="java.util.ArrayList" ofType="Role" >
+            <result column="rid" property="rid"></result>
+            <result column="rolename" property="rolename"></result>
+        </collection>
+    </resultMap>
 
     <select id="findByName" parameterType="string" resultType="user">
-        select * from user where username=#{username}
+        select * from user where username = #{username}
     </select>
 
-    <select id="findRolesByName" parameterType="string" resultType="string">
+    <select id="findRolesIdByUserId" parameterType="int" resultType="int">
+        select r.rid from user u
+        inner join user_role ur
+        on u.uid=ur.uid
+        inner join role r
+        on r.rid=ur.rid
+        where u.uid=#{uid}
+    </select>
+
+    <select id="findRolesById" parameterType="int" resultType="string">
         select r.rolename from user u
         inner join user_role ur
         on u.uid=ur.uid
         inner join role r
         on r.rid=ur.rid
-        where u.username=#{username}
+        where u.uid=#{uid}
     </select>
 
-    <select id="findPermsByName" parameterType="string" resultType="string">
+    <select id="findPermsName" parameterType="string" resultType="string">
         select DISTINCT p.permision_name from user u
         inner join user_role ur
         on ur.uid=u.uid
@@ -26,7 +44,34 @@
         on rp.rid=ur.rid
         inner join permision p
         on p.pid=rp.pid
-        where p.permision_name is not null and u.username=#{username}
+        where p.permision_name is not null and u.uid=#{uid}
     </select>
+
+    <select id="findRolesAll"  resultMap="userMap">
+        select r.rolename, u.username, u.password from user u
+        inner join user_role ur
+        on ur.uid = u.uid
+        inner join role r
+        on r.rid = ur.rid
+    </select>
+
+    <select id="findRoleId" parameterType="int" resultMap="userMap">
+        select r.rolename, u.username, u.password from user u
+        inner join user_role ur
+        on ur.uid = u.uid
+        inner join role r
+        on r.rid = ur.rid
+        where u.uid = #{uid}
+    </select>
+
+    <insert id="addRole" parameterType="int" >
+        insert into user_role (uid,rid) values (#{uid},#{rid})
+    </insert>
+
+    <delete id="deleteRole" parameterType="int" >
+        delete from user_role where uid = #{uid} and rid = #{rid}
+    </delete>
+
+
 
 </mapper>
