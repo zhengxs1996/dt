@@ -34,14 +34,30 @@
             #{id}
         </foreach>
     </delete>
-    
-    <insert id="addAll" parameterType="list" >
-        insert into selectquestions (courseId, question, optionA, optionB, optionC, optionD, answer, level)
-        values
-        <foreach collection="list" item="sq" separator=",">
-            (#{sq.courseId},#{sq.question},#{sq.optionA},
-            #{sq.optionB},#{sq.optionC},#{sq.optionD},
-            #{sq.answer},#{sq.level})
+
+    <select id="findAllJudgment" resultType="com.qfedu.dt.vo.Selects">
+        select s.*,c.cName from dt.selectquestions s inner join course c on s.courseId = c.cId
+        <where>
+            <if test="keyWord != null and keyWord != ''">
+                AND s.question like concat(concat("%",#{param1}),"%")
+            </if>
+            <if test="courseId != null and courseId != ''">
+                AND s.courseId = #{param2}
+            </if>
+            <if test="level != null and level != ''">
+                AND s.level = #{param3}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteOneJudgment" parameterType="Integer">
+        delete from ynquestions where yId = #{id}
+    </delete>
+
+    <delete id="deleteAllJudgment" parameterType="map">
+        delete from ynquestions where yId in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
         </foreach>
-    </insert>
+    </delete>
 </mapper>
