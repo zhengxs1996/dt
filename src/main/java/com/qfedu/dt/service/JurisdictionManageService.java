@@ -11,4 +11,6 @@ public interface JurisdictionManageService {
     public List<Role> findAllRole();
 
     public Integer[] getChecked(Integer rid);
+    public void updatePrivilege( Integer rid,String[] privilegeArray);
+
 }

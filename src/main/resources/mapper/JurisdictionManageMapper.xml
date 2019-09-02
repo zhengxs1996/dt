@@ -28,4 +28,15 @@
         from permision,role_permision
         where permision.pid = role_permision.pid and rid = #{rid}
     </select>
+
+    <delete id="deletePrivilege" parameterType="int">
+        delete from role_permision where rid = #{rid}
+    </delete>
+    
+    <insert id="updatePrivilege" >
+        insert into role_permision(rid,pid) values
+          <foreach collection="privilegeArray" item="pid" separator=",">
+              (#{rid},${pid})
+          </foreach>
+    </insert>
 </mapper>
