@@ -46,32 +46,4 @@ public class QuestionServiceImpl implements QuestionService {
         selectQuestionsDao.deleteAllSelect(id);
     }
 
-    //展示所有的判断题
-    @Override
-    public List<JudgmentQuestions> findAllJudgment(Integer page, Integer limit, String keyWord, Integer courseId, String level) {
-        PageHelper.startPage(page, limit);
-        List<JudgmentQuestions> list = selectQuestionsDao.findAllJudgment(keyWord, courseId, level);
-        while(true){
-            if (list.size() != 0) {
-                break;
-            }
-            PageHelper.startPage(--page, limit);
-            list = selectQuestionsDao.findAllJudgment(keyWord, courseId, level);
-        }
-        return list;
-    }
-
-    //删除一道判断题
-    @Override
-    public void deleteOneJudgment(Integer id) {
-        selectQuestionsDao.deleteOneSelect(id);
-
-    }
-
-    //批量删除判断题
-    @Override
-    public void deleteAllJudgment(Integer[] id) {
-        selectQuestionsDao.deleteAllJudgment(id);
-
-    }
 }
