@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>更新</title>
+    <style type="text/css">
+        h3 {
+            text-align: center;
+        }
+
+    </style>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery-1.12.2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+</head>
+
+<body>
+
+<form class="layui-form" lay-filter="example" th:value="${exam}">
+    <input id="eId" th:value="${exam.eId}" type="hidden">
+    <div class="layui-form-item">
+        <label class="layui-form-label">课程名称</label>
+        <div class="layui-input-block">
+
+            <select id="courseId" name="courseId" lay-verify="required">
+
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">开始时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="beginTime" th:value="${exam.beginTime}" required lay-verify="required" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">结束时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="endTime" th:value="${exam.endTime}" required lay-verify="required" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">考试时长</label>
+        <div class="layui-input-block">
+            <input type="number" name="totalTime" th:value="${exam.totalTime}" required lay-verify="required" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script th:inline="javascript">
+
+    $(function () {
+        $.ajax({
+            type: "get",
+            async: false,
+            url: "exam/findCourse",
+            dataType: "json",
+            success: function (data) {
+                $("#courseId").empty();
+                // $("#courseId").append('<option >-- 请选择课程名称 --</option>');
+                if (data.code == 1) {
+                    var infos = data.info;
+                    $(infos).each(function () {
+                        $("#courseId").append('<option value=' + this.cId + '>' + this.cName + '</option>')
+                    })
+                }
+            }
+        });
+
+    });
+
+    //Demo
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form,
+            layer = layui.layer;
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            var eId=$("#eId").val();
+            $.ajax({
+                type: "post",
+                url: "exam/update?eId="+eId,
+                data: data.field,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 1) {
+                        // var t = parent.layui.table;
+                        // t.reload('testReload');//重新加载页面，testReload表示父窗体table.rend的id值
+                        window.parent.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                    } else {
+                        alert(data.info);
+                    }
+                }
+            });
+            return false;
+        });
+        //手动重新渲染
+        form.render();
+    });
+</script>
+</body>
+
+</html>

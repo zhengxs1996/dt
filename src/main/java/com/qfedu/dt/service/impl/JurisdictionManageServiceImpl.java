@@ -32,4 +32,12 @@ public class JurisdictionManageServiceImpl implements JurisdictionManageService 
     public Integer[] getChecked(Integer rid) {
         return jurisdictionManageDao.getChecked(rid);
     }
+
+    @Override
+    public void updatePrivilege(Integer rid, String[] privilegeArray) {
+        if (jurisdictionManageDao.getChecked(rid)!= null ){
+            jurisdictionManageDao.deletePrivilege(rid);
+        }
+        jurisdictionManageDao.updatePrivilege(rid, privilegeArray);
+    }
 }

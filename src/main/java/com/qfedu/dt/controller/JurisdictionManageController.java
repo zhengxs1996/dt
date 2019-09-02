@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,18 @@ public class JurisdictionManageController {
     public JsonResult getChecked(Integer rid){
         Integer[] checked = jurisdictionManageService.getChecked(rid);
         return new JsonResult(0,checked);
+    }
+
+    @ResponseBody
+    @RequestMapping("/updatePrivilege.do")
+    public JsonResult updatePrivilege(Integer rid,String str){
+        System.out.println(rid);
+        System.out.println(str);
+
+        String[] arr =  str.split(",");
+
+        jurisdictionManageService.updatePrivilege(rid, arr);
+        return new JsonResult(0,null);
     }
 
 

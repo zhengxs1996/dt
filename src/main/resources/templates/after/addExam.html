@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>添加</title>
+    <style type="text/css">
+        h3 {
+            text-align: center;
+        }
+
+    </style>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery-1.12.2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+</head>
+
+<body>
+
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">课程名称</label>
+        <div class="layui-input-block">
+
+            <select id="courseId" name="courseId" lay-verify="required">
+
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">开始时间</label>
+        <div class="layui-input-block">
+            <input type="datetime-local" name="beginTime" required lay-verify="required" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">结束时间</label>
+        <div class="layui-input-block">
+            <input type="datetime-local" name="endTime"  required lay-verify="required" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">考试时长</label>
+        <div class="layui-input-block">
+            <input type="number" name="totalTime"  required lay-verify="required" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script th:inline="javascript">
+    $(function () {
+        $.ajax({
+            type: "get",
+            async: false,
+            url: "exam/findCourse",
+            dataType: "json",
+            success: function (data) {
+                $("#courseId").empty();
+                $("#courseId").append('<option >-- 请选择课程名称 --</option>');
+                if (data.code == 1) {
+                    var infos = data.info;
+                    $(infos).each(function () {
+                        $("#courseId").append('<option value=' + this.cId + '>' + this.cName + '</option>')
+                    })
+                }
+            }
+        });
+
+    });
+
+    //Demo
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            $.ajax({
+                type: "post",
+                url: "exam/add",
+                data: data.field,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 1) {
+                        var t = parent.layui.table;
+                        t.reload('testReload');//重新加载页面,testReload表示父页面table.render中的id值
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                    } else {
+                        alert(data.info);
+                    }
+                }
+            });
+            return false;
+        });
+        //手动重新渲染
+        form.render();
+    });
+</script>
+</body>
+
+</html>

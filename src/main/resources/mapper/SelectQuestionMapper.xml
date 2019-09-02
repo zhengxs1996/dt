@@ -34,7 +34,7 @@
             #{id}
         </foreach>
     </delete>
-    
+
     <insert id="addAll" parameterType="list" >
         insert into selectquestions (courseId, question, optionA, optionB, optionC, optionD, answer, level)
         values
@@ -44,4 +44,5 @@
             #{sq.answer},#{sq.level})
         </foreach>
     </insert>
+
 </mapper>

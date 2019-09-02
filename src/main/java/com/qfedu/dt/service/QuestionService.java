@@ -17,4 +17,5 @@ public interface QuestionService {
     public void deleteAllSelect(Integer[] id);
 
     public void uploadSelect(MultipartFile file);
+
 }
