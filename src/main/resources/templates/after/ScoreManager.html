@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8"/>
+	<title>成绩统计</title>
+
+	<script type="text/javascript" th:src="@{/js/jquery-1.12.2.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/echarts.min.js}"></script>
+	<!--<script type="text/javascript" th:src="@{http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js}"></script>-->
+
+
+</head>
+	<body>
+		<div id="main" style="width: 600px;height:400px;"></div>
+    	<script type="text/javascript">
+        	// 基于准备好的dom，初始化echarts实例
+        	var myChart = echarts.init(document.getElementById('main'));
+        	// 指定图表的配置项和数据
+        	var option = {
+        	    //表头
+				title: {
+					text: '成绩统计分析',
+					left:"center"
+				},
+				tooltip: {},
+				//表头的选择
+				toolbox: {
+					show : true,
+					feature : {
+						dataView : {show: true, readOnly: false},
+						//bar表示柱状图 line表示折线图
+						magicType : {show: true, type: ['line', 'bar']},
+						restore : {show: true},
+						saveAsImage : {show: true}
+					}
+				},
+				legend: {
+					data:['成绩'],
+					left:"left"
+				},
+				//x轴
+				xAxis: {
+					data: []
+				},
+				yAxis: {max:100},
+				series: [{
+					name: '成绩',
+					type: 'bar',
+					markPoint : {
+						data : [
+							{type : 'max', name: '最高成绩'},
+							{type : 'min', name: '最低成绩'}
+						]
+					},
+                    markLine: {
+                        data: [
+                            {type: 'average', name: '平均值'}
+                        ]
+                    },
+					data: []
+				}]
+			};
+
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+
+            $.ajax({
+                url: 'findAllScore.do?eid='+[[${eid}]],
+                dataType: 'json',
+                type: 'get',
+                success: function (data) {
+                    if (data.code == 0) {
+                        myChart.setOption({
+                            xAxis: {
+                                data: data.name
+                            },
+                            series: [{
+                                name: '成绩',
+                                type: 'bar',
+                                markPoint: {
+                                    data: [
+                                        {type: 'max', name: '最大值'},
+                                        {type: 'min', name: '最小值'}
+                                    ]
+                                },
+                                data: data.score
+                            }]
+                        })
+                    } else {
+                        alert(data.info);
+
+                    }
+                },
+                error: function () {
+                    alert("ajax:error");
+                }
+            })
+        </script>
+	</body>
+</html>
