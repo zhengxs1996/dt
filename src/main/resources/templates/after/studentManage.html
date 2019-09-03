@@ -140,9 +140,9 @@
                         data: {"sids": sids},
                         dataType: 'json',
                         success: function (data) {
-                            if (data.code === 0) {
+                            if (data.code == 0) {
                                 layer.msg('删除成功', {icon: 1});
-                                当前所在的页码
+                                //当前所在的页码
                                 if (totalPageNum == currPage && (pageInfo == l||lastNum == l))  {
                                     table.reload('studentTable',{page:{curr:currPage - 1}})
                                     $("#checkedNum").html("0");

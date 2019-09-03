@@ -65,11 +65,11 @@
     </select>
 
     <insert id="addRole" parameterType="int" >
-        insert into user_role (uid,rid) values (#{uid},#{rid})
+        insert into user_role (uid,rid) values (uid = #{uid},rid = 1)
     </insert>
 
     <delete id="deleteRole" parameterType="int" >
-        delete from user_role where uid = #{uid} and rid = #{rid}
+        delete from user_role where uid = #{uid} and rid = 1
     </delete>
 
 

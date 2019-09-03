@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.dt.dao.ScoreMamagerDao">
+
+
+
+
+    <select id="selectAllStudentName" parameterType="int"  resultType="string">
+        select s.sname from student s
+            inner join studentexamanswer g
+            on g.sid = s.sid
+            where eid = #{eid}
+            order by g.totalscore asc
+    </select>
+
+    <select id="selectAllScore" parameterType="int"  resultType="int">
+        select totalscore from studentexamanswer where eid = #{eid} order by totalscore asc
+    </select>
+
+
+</mapper>

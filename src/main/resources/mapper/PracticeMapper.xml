@@ -15,4 +15,12 @@
     <select id="createSimple" resultType="simpleQuestions">
         SELECT * FROM saquestion ORDER BY RAND() LIMIT 2;
     </select>
+
+    <insert id="addPaper">
+        update exam_manage set paper = #{jsonPaper} where eId = #{eId}
+    </insert>
+
+    <select id="findPaper" parameterType="Integer" resultType="string">
+        select paper from exam_manage where eId = #{eId}
+    </select>
 </mapper>

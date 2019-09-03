@@ -12,16 +12,15 @@
 <body>
 
 <div class="layui-btn-group demoTable">
-    <button type="button" class="layui-btn" onclick="add()">添加</button>
+    <!--<button type="button" class="layui-btn" onclick="add()">添加</button>-->
     <!--<button class="layui-btn" data-type="getCheckData">批量删除</button>-->
     <table class="layui-hide" id="demo" lay-filter="test"></table>
 </div>
 
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">生成试卷</a>
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="paper">查看试卷</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看考试成绩</a>
+    <!--<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
 </script>
 
 
@@ -31,8 +30,8 @@
 
 <script>
     layui.use(['table','layer'], function () {
-        var table = layui.table,
-            layer=layui.layer;
+            var table = layui.table,
+                layer=layui.layer;
 
         table.render({
             elem: '#demo'
@@ -50,12 +49,12 @@
             , cols: [
                 [
                     {type:'checkbox', fixed: 'left'}
-                    ,{field: 'eId', width: 150, title: '考试场次', sort: true}
+                    ,{field: 'eId', width: 80, title: '考试场次', sort: true}
                     , {field: 'cName', width: 100, title: '课程名称'}
-                    , {field: 'beginTime', width: 200, title: '考次开始时间', sort: true}
-                    , {field: 'endTime', width: 200, title: '考次结束时间'}
-                    , {field: 'totalTime', title: '考试持续时间', width: 150}
-                    , {fixed: 'right', width:300, align:'center', toolbar: '#barDemo'}
+                    , {field: 'beginTime', width: 150, title: '考次开始时间', sort: true}
+                    , {field: 'endTime', width: 150, title: '考次结束时间'}
+                    , {field: 'totalTime', title: '考试持续时间', width: 80}
+                    , {fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}
                 ]
             ]
         });
@@ -66,28 +65,29 @@
         //监听工具条
         table.on('tool(test)', function(obj){
             var data = obj.data;
+            var eid = data.eId;
             if(obj.event === 'detail'){
                 $.ajax({
                     type: "post",
-                    url: "createPaper",
-                    data: {"eId": data.eId},
+                    url: "scoreJudgment.do",
+                    data: {"eid": eid},
                     dataType: "json",
                     success: function (data) {
                         if (data.code == 1) {
-                            layer.msg(data.info);
+                            layer.open({
+                                type:2,
+                                area:['90%','90%'],
+                                content:'score.do?eid='+eid
+                            })
+
                         } else {
-                            alert("试卷生成失败：" + data.info);
+                            alert(data.info);
                         }
                     }
                 })
-            }else if (obj.event === 'paper') {
-                layer.open({
-                    type: 2,
-                    title: '试卷',
-                    area: ['90%', '90%'], //宽高
-                    content: "showExamPaper?eId=" + data.eId,  //跳到新增页面
-                });
-            }else if(obj.event === 'del'){
+
+
+            } else if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
                     obj.del();
                     layer.close(index);
@@ -107,7 +107,7 @@
                                     }
                                 });
                             } else {
-                                alert(data.info);
+                                layer.alert(data.info);
                             }
                         }
                     })
