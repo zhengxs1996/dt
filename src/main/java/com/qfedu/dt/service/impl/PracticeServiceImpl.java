@@ -87,4 +87,15 @@ public class PracticeServiceImpl implements PracticeService {
 
         return exams;
     }
+
+    @Override
+    public void addPaper(Integer eId, String jsonPaper) {
+        practiceDao.addPaper(eId, jsonPaper);
+    }
+
+    @Override
+    public String showPaper(Integer eId) {
+        String jsonPaper = practiceDao.findPaper(eId);
+        return jsonPaper;
+    }
 }
