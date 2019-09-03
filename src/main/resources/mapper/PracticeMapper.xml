@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.dt.dao.PracticeDao">
+
+    <select id="createSelect" resultType="selectQuestions">
+        SELECT * FROM selectquestions ORDER BY RAND() LIMIT 10;
+    </select>
+    
+    <select id="createJudgment" resultType="judgmentQuestions">
+        SELECT * FROM ynquestions ORDER BY RAND() LIMIT 5;
+    </select>
+
+    <select id="createSimple" resultType="simpleQuestions">
+        SELECT * FROM saquestion ORDER BY RAND() LIMIT 2;
+    </select>
+</mapper>
