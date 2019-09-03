@@ -104,9 +104,9 @@ public class UserCtroller {
     @RequestMapping("/addRole.do")
     @ResponseBody
     public JsonResult addRoleToMan(HttpSession session,Integer uid) {
-        List<Integer> rids=(List<Integer>) session.getAttribute("sids");
+        List<Integer> rids=(List<Integer>) session.getAttribute("rids");
         if (rids.size() == 2) {
-            userService.addROle(uid, 1);
+            userService.addROle(uid);
             return new JsonResult(1, null);
         } else  {
             return new JsonResult(1,"没有添加的权限");
@@ -126,9 +126,9 @@ public class UserCtroller {
     @RequestMapping("/deleteRole.do")
     @ResponseBody
     public JsonResult deleteRole(HttpSession session, Integer uid) {
-        List<Integer> rids=(List<Integer>) session.getAttribute("sids");
+        List<Integer> rids=(List<Integer>) session.getAttribute("rids");
         if (rids.size() == 2) {
-            userService.deleteRole(uid, 1);
+            userService.deleteRole(uid);
             return new JsonResult(1, null);
         } else {
             return new JsonResult(1, null);

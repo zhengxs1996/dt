@@ -18,8 +18,8 @@ public interface UserService {
 
     public UserList findRoleId(int uid);
 
-    public int addROle(Integer uid, Integer rid);
+    public int addROle(Integer uid);
 
-    public int deleteRole(Integer uid,Integer rid);
+    public int deleteRole(Integer uid);
 
 }

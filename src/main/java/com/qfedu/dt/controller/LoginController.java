@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller
@@ -43,9 +44,12 @@ public class LoginController {
 
         User user = userService.findByUserName(username);
 
+        List<Integer> rids=userService.findByRolesIdByUserId(user.getUid());
+
         try {
             subject.login(token);
             session.setAttribute(StrUtil.LONGIN_USER, user);
+            session.setAttribute("rids",rids);
             return new JsonResult(1, null);
         } catch (AuthenticationException e) {
             e.printStackTrace();

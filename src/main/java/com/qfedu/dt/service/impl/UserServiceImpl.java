@@ -44,13 +44,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int addROle(Integer uid, Integer rid) {
-        return userDao.addRole(uid,rid);
+    public int addROle(Integer uid) {
+        return userDao.addRole(uid);
     }
 
     @Override
-    public int deleteRole(Integer uid, Integer rid) {
-        return userDao.deleteRole(uid,rid);
+    public int deleteRole(Integer uid) {
+        return userDao.deleteRole(uid);
     }
 
     @Override

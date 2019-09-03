@@ -25,9 +25,9 @@ public interface UserDao {
     //通过用户ID查询角色ID
     public List<Integer> findRolesIdByUserId(Integer uid);
 
-    public int addRole(Integer uid, Integer rid);
+    public int addRole(Integer uid);
 
-    public int deleteRole(Integer uid,Integer rid);
+    public int deleteRole(Integer uid);
 
 
 }
