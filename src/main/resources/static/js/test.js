@@ -215,7 +215,7 @@ function test(test_id) {
                         var answer_op = '';//答案
                         if(type==3){
                             $.each(answer, function(i, aw) {
-                                answer_op += aw==T ? "正确" : "错误";
+                                answer_op += aw=="T" ? "正确" : "错误";
                             });
                         }else{
                             $.each(answer, function(i, aw) {
