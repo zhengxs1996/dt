@@ -21,7 +21,6 @@ public interface UserDao {
 
     public UserList findRoleId(int uid);
 
-
     //通过用户ID查询角色ID
     public List<Integer> findRolesIdByUserId(Integer uid);
 
