@@ -16,27 +16,27 @@
     <script type="text/javascript" th:src="@{/js/jquery-1.12.2.min.js}"></script>
 </head>
 <body>
-<div id="content">
+<!--<div id="content">-->
 
-    <div class="layui-form searchDiv">
+<!--    <div class="layui-form searchDiv">-->
 <!--        <div class="layui-form-item">-->
-<!--            &lt;!&ndash;            <div class="layui-inline" style="margin-left: 20px">&ndash;&gt;-->
-<!--            &lt;!&ndash;                <div class="layui-btn-group demoTable">&ndash;&gt;-->
-<!--            &lt;!&ndash;                    &lt;!&ndash;<button data-method="offset" data-type="auto" class="layui-btn layui-btn-normal">居中弹出</button>&ndash;&gt;&ndash;&gt;-->
-<!--            &lt;!&ndash;                    <button type="button" class="layui-btn" data-method="offset" data-type="auto" ><i class="layui-icon">&#xe608;</i> 添加</button>&ndash;&gt;-->
-<!--            &lt;!&ndash;&lt;!&ndash;                    <button class="layui-btn" data-type="getCheckData">批量删除</button>&ndash;&gt;&ndash;&gt;-->
-<!--            &lt;!&ndash;                </div>&ndash;&gt;-->
-<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--                        <div class="layui-inline" style="margin-left: 20px">-->
+<!--                            <div class="layui-btn-group demoTable">-->
+<!--                                &lt;!&ndash;<button data-method="offset" data-type="auto" class="layui-btn layui-btn-normal">居中弹出</button>&ndash;&gt;-->
+<!--                                <button type="button" class="layui-btn" data-method="offset" data-type="auto" ><i class="layui-icon">&#xe608;</i> 添加</button>-->
+<!--                                <button class="layui-btn" data-type="getCheckData">批量删除</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
 
-<!--            &lt;!&ndash;            <div class="layui-inline" style="float: right">&ndash;&gt;-->
-<!--            &lt;!&ndash;                <div class="layui-input-inline">&ndash;&gt;-->
-<!--            &lt;!&ndash;                    <input type="text"id="sname"  lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">&ndash;&gt;-->
-<!--            &lt;!&ndash;                </div>&ndash;&gt;-->
-<!--            &lt;!&ndash;                <button type="button" class="layui-btn" id="search" data-type="reload" style="margin-bottom: 5px">搜索</button>&ndash;&gt;-->
-<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--                        <div class="layui-inline" style="float: right">-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <input type="text"id="sname"  lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">-->
+<!--                            </div>-->
+<!--                            <button type="button" class="layui-btn" id="search" data-type="reload" style="margin-bottom: 5px">搜索</button>-->
+<!--                        </div>-->
 <!--        </div>-->
-    </div>
+<!--    </div>-->
 
     <table class="layui-hide" id="studentTable" lay-filter="test"></table>
 
@@ -74,12 +74,12 @@
                 // , last: false //不显示尾页
                 , limits: [5, 10, 20]
             }
-            , toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+            // , toolbar: 'default' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
             , cols: [
                 [ //表头
-                    {type: 'checkbox', fixed: 'left'}
+                      {type: 'checkbox', fixed: 'left'}
+                    , {field: 'uid', align: 'center',title: 'uid', width: 100 , }
                     , {field: 'roleName', align: 'center', title: '角色名称', width: 100}
-                    , {field: 'uid', width: 100 , style:'display:none;'}
                     , {field: 'username', align: 'center', title: '账号', width: 200}
                     , {field: 'password', align: 'center', title: '密码', width: 100, totalRow: true}
                     , {title: '操作', width: 200, align: 'center', toolbar: '#barDemo'}
