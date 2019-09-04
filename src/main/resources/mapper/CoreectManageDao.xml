@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.dt.dao.CorrectManageDao">
+
+    <select id="findByStudent" parameterType="int" resultType="com.qfedu.dt.vo.Studentexamanswer">
+        select se.sid , s.sname  from studentexamanswer  se
+        inner join  student s on s.sid = se.sid where se.eid =  #{eid}
+    </select>
+
+    <select id="findBySaqScore" parameterType="int">
+        select se.saqscore from student s inner join  studentexamanswer se
+        on s.sid = se.sid where se.sid = #{sid}
+     </select>
+</mapper>
