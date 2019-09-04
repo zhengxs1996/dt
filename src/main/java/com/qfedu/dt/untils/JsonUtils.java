@@ -142,7 +142,7 @@ public class JsonUtils {
             JavaType javaType = mapper.getTypeFactory().constructParametricType(List.class, beanType);
             list = mapper.readValue(json, javaType);
         } catch (Exception e) {
-            e.printStackTrace();
+
         }
         return list;
     }
