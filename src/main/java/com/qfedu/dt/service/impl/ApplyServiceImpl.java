@@ -7,6 +7,7 @@ import com.qfedu.dt.vo.ExamInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,13 +30,19 @@ public class ApplyServiceImpl implements ApplyService {
 
     @Override
     public Integer applyExam(Integer sId, Integer eId) {
-        Integer stu = applyDao.findExam(eId);
-        if (stu == null){
-            applyDao.applyExam(sId,eId);
-            return 0;
+        ExamInfo examInfo = applyDao.findBeginTime(eId);
+        Date currentTime = new Date();
+        Date beginTime = examInfo.getBeginTime();
+        if (currentTime.after(beginTime)){
+            return 2;
         }else {
-            return 1;
+            Integer stu = applyDao.findExam(eId);
+            if (stu == null){
+                applyDao.applyExam(sId,eId);
+                return 0;
+            }else {
+                return 1;
+            }
         }
-
     }
 }

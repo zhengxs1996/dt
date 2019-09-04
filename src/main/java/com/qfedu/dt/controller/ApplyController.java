@@ -46,8 +46,10 @@ public class ApplyController {
         Integer statue = applyService.applyExam(sId, eId);
         if (statue == 0){
             return new JsonResult(0,"报名成功");
-        }else {
+        }else if(statue == 1){
             return new JsonResult(1,"已报名，请勿重复报名");
+        }else {
+            return new JsonResult(2,"报名时间已过");
         }
     }
 }

@@ -22,4 +22,10 @@
         where se.eid = #{eid}
     </select>
 
+    <select id="findBeginTime" parameterType="int" resultType="com.qfedu.dt.vo.ExamInfo">
+        select *
+        from exam_manage
+        where eid = #{eid}
+    </select>
+
 </mapper>
