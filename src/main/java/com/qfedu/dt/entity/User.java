@@ -1,5 +1,8 @@
 package com.qfedu.dt.entity;
 
+/**
+ * 后台用户登录账号实体类
+ */
 public class User {
     private Integer uid;
     private String username;
