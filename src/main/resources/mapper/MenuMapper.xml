@@ -12,13 +12,13 @@
         </collection>
     </resultMap>
     
-    <select id="MenuList" resultMap="MenuMap">
+    <select id="MenuList" parameterType="Integer" resultMap="MenuMap">
         select distinct p.pid id, p.resource_name pname, c.resource_name cname, c.url
         from permision p
                  inner join permision c on p.pid = c.parent_id
                  inner join role_permision rp on c.pid = rp.pid
                  inner join user_role ur on ur.rid = rp.rid
-        where ur.uid = 1
+        where ur.uid = #{uId}
           and c.resource_type = 'menu';
     </select>
 </mapper>
