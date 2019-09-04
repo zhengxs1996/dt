@@ -1,6 +1,8 @@
 package com.qfedu.dt.controller;
 
+import com.qfedu.dt.entity.User;
 import com.qfedu.dt.service.MenuService;
+import com.qfedu.dt.untils.StrUtil;
 import com.qfedu.dt.vo.MenuList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,8 @@ public class MenuController {
     @RequestMapping("/menu.do")
     @ResponseBody
     public List<MenuList> menuList(HttpSession session) {
-//        User attribute = (User) session.getAttribute(StrUtil.LONGIN_USER);
-        return menuService.menuList();
+        User loginUser = (User) session.getAttribute(StrUtil.LONGIN_USER);
+        Integer uid = loginUser.getUid();
+        return menuService.menuList(uid);
     }
 }

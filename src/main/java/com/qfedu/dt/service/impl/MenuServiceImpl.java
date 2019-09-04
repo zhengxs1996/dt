@@ -15,7 +15,7 @@ public class MenuServiceImpl implements MenuService {
     private MenuDao menuDao;
 
     @Override
-    public List<MenuList> menuList() {
-        return menuDao.MenuList();
+    public List<MenuList> menuList(Integer uId) {
+        return menuDao.MenuList(uId);
     }
 }
