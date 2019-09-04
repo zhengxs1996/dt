@@ -6,6 +6,7 @@ public class ExamManage {
     private String beginTime;//考试日期
     private String endTime;//考试开始时间
     private Integer totalTime;//考试持续时间
+    private String paper;
 
     public Integer geteId() {
         return eId;
@@ -45,5 +46,13 @@ public class ExamManage {
 
     public void setTotalTime(Integer totalTime) {
         this.totalTime = totalTime;
+    }
+
+    public String getPaper() {
+        return paper;
+    }
+
+    public void setPaper(String paper) {
+        this.paper = paper;
     }
 }
