@@ -39,4 +39,12 @@
     <select id="findCourse" resultType="course">
         select * from course
     </select>
+
+    <select id="findExamByMyself" resultType="com.qfedu.dt.vo.VExamManage">
+        select e.eId, e.courseId cId, c.cName, e.beginTime, e.endTime, e.totalTime
+        from exam_manage e
+                 inner join student_exam s on e.eId = s.eId
+                 inner join course c on c.cId = e.courseId
+        where s.sId = #{sid}
+    </select>
 </mapper>

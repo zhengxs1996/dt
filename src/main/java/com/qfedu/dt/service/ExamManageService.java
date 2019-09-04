@@ -20,4 +20,6 @@ public interface ExamManageService {
     public List<VExamManage> findAllExamManage(Integer page, Integer limit);
 
     public List<Course> findAllCourse();
+
+    public List<ExamManage> findExamByMyself(Integer page, Integer limit, Integer sid);
 }

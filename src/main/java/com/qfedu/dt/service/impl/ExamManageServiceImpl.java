@@ -52,4 +52,10 @@ public class ExamManageServiceImpl implements ExamManageService {
     public List<Course> findAllCourse() {
         return examManageDao.findCourse();
     }
+
+    @Override
+    public List<ExamManage> findExamByMyself(Integer page, Integer limit, Integer sid) {
+        PageHelper.startPage(page, limit);
+        return examManageDao.findExamByMyself(sid);
+    }
 }
