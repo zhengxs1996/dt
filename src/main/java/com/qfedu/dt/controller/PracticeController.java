@@ -73,9 +73,15 @@ public class PracticeController {
         String jsonPaper = practiceService.showPaper(eId);
         List<Exam> examList = JsonUtils.jsonToList(jsonPaper, Exam.class);
         HashMap<String, Object> map = new HashMap<>();
-        map.put("title", "试卷内容");
-        map.put("exam", examList);
-        return map;
+        if (examList != null) {
+            examList = JsonUtils.jsonToList(jsonPaper, Exam.class);
+            map.put("title", "试卷内容");
+            map.put("exam", examList);
+            return map;
+        } else {
+            map.put("result", "试卷未生成");
+            return map;
+        }
     }
 
 }

@@ -262,6 +262,10 @@ function showPaper(eId) {
             dataType : "json",
             success : function(data){
                 console.log(data);
+                if (data.title != "试卷内容") {
+                    alert("试卷未生成");
+                    return;
+                }
                 var titleB = data.title;
                 var exam = data.exam;
                 var test_box = '';
