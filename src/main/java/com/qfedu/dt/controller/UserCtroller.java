@@ -107,7 +107,7 @@ public class UserCtroller {
         List<Integer> rids=(List<Integer>) session.getAttribute("rids");
         if (rids.size() == 2) {
             userService.addROle(uid);
-            return new JsonResult(1, null);
+            return new JsonResult(0, null);
         } else  {
             return new JsonResult(1,"没有添加的权限");
         }
@@ -129,7 +129,7 @@ public class UserCtroller {
         List<Integer> rids=(List<Integer>) session.getAttribute("rids");
         if (rids.size() == 2) {
             userService.deleteRole(uid);
-            return new JsonResult(1, null);
+            return new JsonResult(0, null);
         } else {
             return new JsonResult(1, null);
         }

@@ -26,6 +26,11 @@ public class ExamManageController {
         return "after/exam";
     }
 
+    @RequestMapping("/correct")
+    public String toCorrect() {
+        return "after/correct";
+    }
+
     @RequestMapping("/exam/checkOneExam")
     public String findAExamManage(Model model, Integer eId) {
         VExamManage vExamManage = examManageService.findByExamManageId(eId);
