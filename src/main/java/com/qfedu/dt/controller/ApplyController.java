@@ -3,6 +3,7 @@ package com.qfedu.dt.controller;
 import com.github.pagehelper.Page;
 import com.qfedu.dt.common.JsonResult;
 import com.qfedu.dt.service.ApplyService;
+import com.qfedu.dt.service.ScoreMamagerService;
 import com.qfedu.dt.vo.ExamInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,8 @@ import java.util.Map;
 public class ApplyController {
     @Autowired
     private ApplyService applyService;
+    @Autowired
+    private ScoreMamagerService scoreMamagerService;
 
     @ResponseBody
     @RequestMapping("/findAllExam.do")
@@ -43,8 +46,9 @@ public class ApplyController {
 
     @ResponseBody
     @RequestMapping("/applyExam.do")
-    public JsonResult applyExam(Integer eId, HttpServletRequest request){
-        Integer sId = Integer.parseInt( request.getHeader("sId"));
+    public JsonResult applyExam(Integer eId, String email){
+
+        Integer sId = scoreMamagerService.findIdByEmail(email);
         Integer statue = applyService.applyExam(sId, eId);
         if (statue == 0){
             return new JsonResult(0,"报名成功");
