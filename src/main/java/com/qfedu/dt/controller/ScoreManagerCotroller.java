@@ -4,6 +4,7 @@ import com.qfedu.dt.dao.ScoreMamagerDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @Controller
 public class ScoreManagerCotroller {
     @Autowired(required = false)
@@ -73,6 +75,30 @@ public class ScoreManagerCotroller {
         return map;
 
     }
+
+
+    @ResponseBody
+    @RequestMapping("/before/findOneScore.do")
+    public Map<String, Object> selectOneScore(Integer sid){
+        Map<String, Object> map = new HashMap<>();
+        List<String> data = scoreMamagerDao.selectAllStudentExam(sid);
+        List<Integer> score = scoreMamagerDao.selectOneAllScore(sid);
+        if(data.size() != 0){
+            map.put("info","");
+            map.put("code",0);
+            map.put("info",null);
+            map.put("data",data);
+            map.put("score", score);
+        } else{
+            map.put("code",1);
+            map.put("info","本场考试还没有批改" );
+        }
+
+
+        return map;
+
+    }
+
 
 
 
