@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qfedu.dt.dao.ApplyDao">
+
+
+    <select id="findAllExam" resultType="com.qfedu.dt.vo.ExamInfo">
+        select e.*, cName from exam_manage e ,course c
+        where e.courseId = c.cId
+    </select>
+
+    <insert id="applyExam">
+        insert into student_exam(sId,eId) values(#{sId},#{eId})
+    </insert>
+
+    <select id="findExam" parameterType="int" resultType="int">
+        select s.sId
+        from student_exam se inner join student s
+        on se.sid = s.sid
+        where se.eid = #{eid}
+    </select>
+
+    <select id="findBeginTime" parameterType="int" resultType="com.qfedu.dt.vo.ExamInfo">
+        select *
+        from exam_manage
+        where eid = #{eid}
+    </select>
+
+</mapper>
