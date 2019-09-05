@@ -31,4 +31,9 @@ public class ScoreManagerImpl implements ScoreMamagerService {
     public List<Integer> selectOneAllScore(Integer sid) {
         return scoreMamagerDao.selectOneAllScore(sid);
     }
+
+    @Override
+    public Integer findIdByEmail(String email) {
+        return scoreMamagerDao.findIdByEmail(email);
+    }
 }

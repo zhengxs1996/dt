@@ -38,4 +38,10 @@
     </select>
 
 
+
+    <select id="findIdByEmail" parameterType="string"  resultType="int">
+     select  sid from student where email = #{email}
+    </select>
+
+
 </mapper>

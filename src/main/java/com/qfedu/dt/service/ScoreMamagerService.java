@@ -13,4 +13,6 @@ public interface ScoreMamagerService {
     public List<String> selectAllStudentExam(Integer sid);
     //查询所有的成绩
     public List<Integer> selectOneAllScore(Integer sid);
+
+    public Integer findIdByEmail(String email);
 }
