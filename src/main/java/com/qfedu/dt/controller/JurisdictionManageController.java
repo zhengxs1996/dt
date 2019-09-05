@@ -66,11 +66,7 @@ public class JurisdictionManageController {
     @ResponseBody
     @RequestMapping("/updatePrivilege.do")
     public JsonResult updatePrivilege(Integer rid,String str){
-        System.out.println(rid);
-        System.out.println(str);
-
         String[] arr =  str.split(",");
-
         jurisdictionManageService.updatePrivilege(rid, arr);
         return new JsonResult(0,null);
     }
