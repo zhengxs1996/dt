@@ -8,5 +8,5 @@ import java.util.List;
 public interface ApplyService {
     public List<ExamInfo> findAllExam(Integer page, Integer limit);
 
-    public Integer applyExam(Integer sId,Integer eId);
+    public Integer applyExam(Integer sId, Integer eId);
 }
