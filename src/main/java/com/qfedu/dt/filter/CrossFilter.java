@@ -19,7 +19,7 @@ public class CrossFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
         httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
         // token name 是程序中自定义的请求头，需要在Access-Control-Allow-Headers 进行设置
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with,Authorization,accept,content-type,token,name");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with,Authorization,accept,content-type,token,name,password");
         httpServletResponse.setHeader("Access-Control-Allow-Methods", "OPTIONS,GET,POST,DELETE,PUT");
         httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
         chain.doFilter(req, resp);

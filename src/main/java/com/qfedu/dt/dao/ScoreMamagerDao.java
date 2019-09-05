@@ -10,6 +10,8 @@ public interface ScoreMamagerDao {
     public List<Integer> selectAllScore(Integer eid);
 
 
+    //查询出来所有的id
+    public Integer findIdByEmail(String email);
     //查询出来所有的考次
     public List<String> selectAllStudentExam(Integer sid);
     //查询所有的成绩

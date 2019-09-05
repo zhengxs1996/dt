@@ -37,7 +37,7 @@ public class PracticeController {
         List<Exam> examList = practiceService.createPaper();
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("title", "在线考试");
+        map.put("title", "模拟考试");
         map.put("exam", examList);
         return map;
     }

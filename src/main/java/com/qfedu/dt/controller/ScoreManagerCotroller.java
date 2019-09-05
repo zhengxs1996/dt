@@ -79,7 +79,8 @@ public class ScoreManagerCotroller {
 
     @ResponseBody
     @RequestMapping("/before/findOneScore.do")
-    public Map<String, Object> selectOneScore(Integer sid){
+    public Map<String, Object> selectOneScore(String email){
+        int sid = scoreMamagerDao.findIdByEmail(email);
         Map<String, Object> map = new HashMap<>();
         List<String> data = scoreMamagerDao.selectAllStudentExam(sid);
         List<Integer> score = scoreMamagerDao.selectOneAllScore(sid);
