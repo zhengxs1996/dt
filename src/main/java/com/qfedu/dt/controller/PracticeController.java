@@ -1,12 +1,9 @@
 package com.qfedu.dt.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qfedu.dt.common.JsonResult;
 import com.qfedu.dt.service.PracticeService;
 import com.qfedu.dt.untils.JsonUtils;
 import com.qfedu.dt.vo.Exam;
-import jdk.internal.org.objectweb.asm.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
