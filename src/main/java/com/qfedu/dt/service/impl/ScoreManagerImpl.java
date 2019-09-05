@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class ScoreManagerImpl implements ScoreMamagerService {
-    @Autowired
+    @Autowired(required = false)
     private ScoreMamagerDao scoreMamagerDao;
 
     @Override
@@ -20,5 +20,15 @@ public class ScoreManagerImpl implements ScoreMamagerService {
     @Override
     public List<Integer> selectAllScore(Integer eid) {
         return scoreMamagerDao.selectAllScore(eid);
+    }
+
+    @Override
+    public List<String> selectAllStudentExam(Integer sid) {
+        return scoreMamagerDao.selectAllStudentExam(sid);
+    }
+
+    @Override
+    public List<Integer> selectOneAllScore(Integer sid) {
+        return scoreMamagerDao.selectOneAllScore(sid);
     }
 }

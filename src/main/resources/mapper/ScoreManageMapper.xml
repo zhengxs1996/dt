@@ -20,4 +20,22 @@
     </select>
 
 
+
+    <select id="selectAllStudentExam" parameterType="int"  resultType="string">
+     select exam_manage.endTime , studentexamanswer.totalscore from exam_manage
+        INNER JOIN studentexamanswer
+        on exam_manage.eId = studentexamanswer.eid
+        where studentexamanswer.sId=#{sid}
+        order by  exam_manage.eId asc
+    </select>
+
+    <select id="selectOneAllScore" parameterType="int"  resultType="int">
+     select  studentexamanswer.totalscore  from exam_manage
+        INNER JOIN studentexamanswer
+        on exam_manage.eId = studentexamanswer.eid
+        where studentexamanswer.sId=#{sid}
+        order by  exam_manage.eId asc
+    </select>
+
+
 </mapper>
