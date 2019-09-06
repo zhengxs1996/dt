@@ -14,8 +14,8 @@
         on s.sid = se.sid where se.sid = #{sid} and se.eid = #{eid}
      </select>
 
-    <select id="findByGid" parameterType="int" resultType="int">
-        select se.gid  from studentexamanswer where  se.sid = #{sid} and  se.eid = #{eid}
+    <select id="findByGid" parameterType="map" resultType="int">
+        select se.gid  from studentexamanswer se where  se.sid = #{sid} and  se.eid = #{eid}
     </select>
 
     <insert id="addSaqScore" parameterType="int">

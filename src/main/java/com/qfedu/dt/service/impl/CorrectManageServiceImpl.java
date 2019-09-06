@@ -24,6 +24,11 @@ public class CorrectManageServiceImpl implements CorrectManageService {
     }
 
     @Override
+    public int findByGid(Integer sid, Integer eid) {
+        return correctManageDao.findByGid(sid, eid);
+    }
+
+    @Override
     public void addSaqScore(Integer gid) {
          correctManageDao.addSaqScore(gid);
     }

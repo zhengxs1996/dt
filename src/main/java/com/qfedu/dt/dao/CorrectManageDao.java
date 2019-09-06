@@ -11,4 +11,6 @@ public interface CorrectManageDao {
     public String findBystudentanswer(@Param("sid") Integer sid,
                                       @Param("eid") Integer eid);
     public void   addSaqScore(Integer sid);
+
+    public int findByGid (@Param("sid")Integer sid, @Param("eid") Integer eid);
 }

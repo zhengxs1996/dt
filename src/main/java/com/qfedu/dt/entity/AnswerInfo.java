@@ -26,6 +26,7 @@ public class AnswerInfo {
     private String judge5;
     private String shortAnswer1;
     private String shortAnswer2;
+    private Integer gid;
 
     public String getSimpleSelect1() {
         return simpleSelect1;

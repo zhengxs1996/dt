@@ -11,5 +11,8 @@ public interface CorrectManageService {
 
     //展示对应场次的学生试卷简答题
     public String findByfindBystudentanswer(Integer sid,Integer eid);
+    //查找gid
+    public int findByGid(Integer sid, Integer eid);
+    //
     public void addSaqScore(Integer gid);
 }

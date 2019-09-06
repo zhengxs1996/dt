@@ -17,12 +17,12 @@
 </head>
 <body>
 
-<form class="layui-form" action="">
+<form class="layui-form">
 
     <div class="layui-form-item">
         <label class="layui-form-label">简答题总分</label>
         <div class="layui-input-block">
-            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入分数" class="layui-input">
+            <input type="text" name="title" id="titlePid" th:name="score" lay-verify="title" autocomplete="off" placeholder="请输入分数" class="layui-input">
         </div>
     </div>
     </div>
@@ -45,37 +45,9 @@
     {{d.LAY_TABLE_INDEX+1}}
 </script>
 <script type="text/javascript">
-    layui.use(['layer','form'],function () {
-        var layer = layui.layer
-            , form = layui.form
 
-        form.on('submit(save)', function (data) {
-            $.ajax({
-                type: "post",
-                url: "addSaqScore.do"+window.location.search,
-                data: data.field,
-                dataType: "json",
-                success: function (data) {
-                    if (data.code == 0) {
-                        layer.msg("添加成功")
-                        var t = parent.layui.table;
-                        t.reload('studentTable');// 重新加载页面,demo 表示父窗体table标签的id值
-                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭
-                    } else {
-                        layer.msg("添加分数")
-                    }
-                },
-                error: function () {
-                    layer.msg("ajax出错");
-                }
-            })
-            return false;
-        })
-    })
-</script>
+    var gid;
 
-<script>
     layui.use(['laypage', 'layer', 'table', 'element', 'form'], function () {
         var $ = layui.jquery
             , laypage = layui.laypage //分页
@@ -92,7 +64,7 @@
             , title: '试卷'
             , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'] //自定义分页布局
-                //,curr: 5 //设定初始在第 5 页
+                //,curr: 5 //设定初始addSaqScore.do在第 5 页
                 //,groups: 1 //只显示 1 个连续页码
                 // , first: false //不显示首页
                 // , last: false //不显示尾页
@@ -102,28 +74,26 @@
             , cols: [
                 [ //表头
                     {type: 'checkbox', fixed: 'left'}
+                    , {field: 'gid', align: 'center',title: '问题', width: 100 , }
                     , {field: 'question', align: 'center',title: '问题', width: 100 , }
-                    , {field: 'anwer', align: 'center',title: '参考答案', width: 100 , }
-                    , {field: 'srtudentnwer', align: 'center',title: '学生答案', width: 100 , }
+                    , {field: 'anwer', align: 'center',title: '参考答案', width: 300 , }
+                    , {field: 'srtudentnwer', align: 'center',title: '学生答案', width: 300 , }
                     // , {title: '操作', width: 200, align: 'center', toolbar: '#barDemo'}
                 ]
             ]
             , id: 'studentTable'
             , done: function (res) {
-                // countNum = res.count;
             }
         });
 
         var $ = layui.jquery, active = {
             //筛选重载
             reload: function () {
-                var rolename = $("#sid").val();
-                var username = $("#sname").var();
+                var gid = $("#titlePid").val();
                 //执行重载
                 table.reload('studentTable', {
                     where: {
-                        sname: sname,
-                        sid: sid,
+                        gid: gid
                     },
                 });
             },
@@ -153,6 +123,32 @@
             }
         });
     });
+
+    $("form").submit(function () {
+        var gid =  $("#titlePid").val();
+        $.ajax({
+            type: "get",
+            async:false,
+            url: "addSaqScore.do?gid=" + gid,
+            data: data.field,
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0) {
+                    layer.msg("添加成功")
+                    var t = parent.layui.table;
+                    t.reload('studentTable');// 重新加载页面,demo 表示父窗体table标签的id值
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
+                } else {
+                    layer.msg("添加分数")
+                }
+            },
+            error: function () {
+                layer.msg("ajax出错");
+            }
+        })
+        return false;
+    })
 </script>
 </body>
 </html>

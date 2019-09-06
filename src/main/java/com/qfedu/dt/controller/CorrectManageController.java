@@ -11,6 +11,7 @@ import com.qfedu.dt.vo.Exam;
 import com.qfedu.dt.vo.PiGaiShow;
 import com.qfedu.dt.vo.Studentexamanswer;
 import com.qfedu.dt.vo.Values;
+import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,11 +61,11 @@ public class CorrectManageController {
     @RequestMapping("/Correct.do")
     public Map<String, Object> findBySaqScore(Integer page, Integer limit, Integer sid, Integer eid) {
         String studentanswer=correctManageService.findByfindBystudentanswer(sid, eid);
+        int gid=correctManageService.findByGid(sid, eid);
         //使用Json工具将Json格式转化成java对象,将储存在json中的学生答案取出来
         AnswerInfo answerInfo=JsonUtils.jsonToClass(studentanswer, AnswerInfo.class);
         String shortAnswer1=answerInfo.getShortAnswer1();
         String shortAnswer2=answerInfo.getShortAnswer2();
-
         String jsonPaper = practiceService.showPaper(eid);
 
         //使用Json工具将Json格式转化成java对象,将储存在json中的参考答案取出来
@@ -83,21 +84,19 @@ public class CorrectManageController {
         piGaiShow.setQuestion(values.get(1).getQuestionStem());
         piGaiShow.setAnwer(values.get(1).getAnswer().get(0));
         piGaiShow.setSrtudentnwer(shortAnswer2);
+        piGaiShow.setGid(gid);
         list.add(piGaiShow);
 
-
-
-        Integer gid=piGaiShow.getGid();
         Map<String, Object> map=new HashMap<>();
         map.put("code",0);
-        map.put("msg",gid);
+        map.put("msg","");
         map.put("count",2);
         map.put("data",list);
         return map;
     }
     @RequestMapping("/addSaqScore.do")
     @ResponseBody
-    public JsonResult addSaqScore(Integer gid) {
+    public JsonResult addSaqScore(Integer gid, Integer score) {
         correctManageService.addSaqScore(gid);
         return new JsonResult(0,null);
     }
