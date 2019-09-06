@@ -11,7 +11,6 @@ import com.qfedu.dt.vo.Exam;
 import com.qfedu.dt.vo.PiGaiShow;
 import com.qfedu.dt.vo.Studentexamanswer;
 import com.qfedu.dt.vo.Values;
-import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -97,7 +96,7 @@ public class CorrectManageController {
     @RequestMapping("/addSaqScore.do")
     @ResponseBody
     public JsonResult addSaqScore(Integer gid, Integer score) {
-        correctManageService.addSaqScore(gid);
+        correctManageService.addSaqScore(gid,score);
         return new JsonResult(0,null);
     }
 }

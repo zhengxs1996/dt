@@ -14,5 +14,5 @@ public interface CorrectManageService {
     //查找gid
     public int findByGid(Integer sid, Integer eid);
     //
-    public void addSaqScore(Integer gid);
+    public void addSaqScore(Integer gid,Integer score);
 }

@@ -29,7 +29,7 @@ public class CorrectManageServiceImpl implements CorrectManageService {
     }
 
     @Override
-    public void addSaqScore(Integer gid) {
-         correctManageDao.addSaqScore(gid);
+    public void addSaqScore(Integer gid,Integer score) {
+         correctManageDao.addSaqScore(gid,score);
     }
 }

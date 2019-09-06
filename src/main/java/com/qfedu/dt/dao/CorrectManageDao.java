@@ -10,7 +10,7 @@ public interface CorrectManageDao {
 
     public String findBystudentanswer(@Param("sid") Integer sid,
                                       @Param("eid") Integer eid);
-    public void   addSaqScore(Integer sid);
+    public void   addSaqScore(@Param("gid") Integer gid,@Param("score") Integer score);
 
     public int findByGid (@Param("sid")Integer sid, @Param("eid") Integer eid);
 }

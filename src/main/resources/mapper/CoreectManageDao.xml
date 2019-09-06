@@ -18,7 +18,7 @@
         select se.gid  from studentexamanswer se where  se.sid = #{sid} and  se.eid = #{eid}
     </select>
 
-    <insert id="addSaqScore" parameterType="int">
+    <insert id="addSaqScore" parameterType="map">
         insert into studentexamanswer (saqscore) values #{saqscore} where gid = {gid}
     </insert>
 </mapper>
