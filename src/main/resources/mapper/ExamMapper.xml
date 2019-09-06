@@ -13,5 +13,9 @@
         insert into studentexamanswer(studentanswer,selectscore,judgmentscore,sid,eid) values (#{studentanswer},#{selectscore},#{judgmentscore},#{sid},#{eid})
     </insert>
 
+    <select id="checkAnswer" resultType="com.qfedu.dt.vo.Studentexamanswer">
+        select * from studentexamanswer where sid=#{sid} and eid = #{eid}
+    </select>
+
 
 </mapper>

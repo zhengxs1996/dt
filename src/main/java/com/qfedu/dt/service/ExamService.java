@@ -14,4 +14,5 @@ public interface ExamService {
 
     public void storeAnswer(AnswerInfo answer,Integer selectscore, Integer judgmentscorem ,Integer sid, Integer eid);
 
+    public Integer checkAnswer(Integer sid,Integer eid);
 }

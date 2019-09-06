@@ -5,6 +5,7 @@ import com.qfedu.dt.entity.AnswerInfo;
 import com.qfedu.dt.entity.ExamManage;
 import com.qfedu.dt.service.ExamService;
 import com.qfedu.dt.untils.JsonUtils;
+import com.qfedu.dt.vo.Studentexamanswer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +29,14 @@ public class ExamServiceImpl implements ExamService {
     public void storeAnswer(AnswerInfo answer, Integer selectscore, Integer judgmentscore,Integer sid, Integer eid) {
         String answerStr = JsonUtils.objectToJson(answer);
         examDao.storeAnswer(answerStr,selectscore,judgmentscore,sid,eid);
+    }
+
+    @Override
+    public Integer checkAnswer(Integer sid, Integer eid) {
+        Studentexamanswer answer = examDao.checkAnswer(sid, eid);
+        if (answer ==null){
+            return 0;
+        }
+        return 1;
     }
 }

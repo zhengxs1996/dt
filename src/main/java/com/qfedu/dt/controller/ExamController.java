@@ -44,11 +44,18 @@ public class ExamController {
     @RequestMapping("/submitAnswer.do")
     public JsonResult submitAnswer(AnswerInfo answer, Integer sid, Integer eid, Integer selectScore,Integer judgeScore,HttpServletRequest request){
         //Integer sId = Integer.parseInt( request.getHeader("sId"));
-        System.out.println(answer);
-        System.out.println(selectScore);
-        System.out.println(judgeScore);
         examService.storeAnswer(answer,selectScore,judgeScore,sid,eid);
-
         return new JsonResult(0,"成功");
+    }
+
+    @ResponseBody
+    @RequestMapping("/checkAnswer.do")
+    public JsonResult checkAnswer(Integer sid, Integer eid){
+        //Integer sId = Integer.parseInt( request.getHeader("sId"));
+        Integer answer = examService.checkAnswer(sid, eid);
+        if (answer ==0){
+        return new JsonResult(0,"");
+        }
+        return new JsonResult(1,"");
     }
 }
