@@ -5,12 +5,20 @@
 <mapper namespace="com.qfedu.dt.dao.CorrectManageDao">
 
     <select id="findByStudent" parameterType="int" resultType="com.qfedu.dt.vo.Studentexamanswer">
-        select se.sid , s.sname  from studentexamanswer  se
+        select se.sid , s.sname,  eid from studentexamanswer  se
         inner join  student s on s.sid = se.sid where se.eid =  #{eid}
     </select>
 
-    <select id="findBySaqScore" parameterType="int">
-        select se.saqscore from student s inner join  studentexamanswer se
-        on s.sid = se.sid where se.sid = #{sid}
+    <select id="findBystudentanswer" parameterType="map" resultType="String">
+        select se.studentanswer from student s inner join  studentexamanswer se
+        on s.sid = se.sid where se.sid = #{sid} and se.eid = #{eid}
      </select>
+
+    <select id="findByGid" parameterType="int" resultType="int">
+        select se.gid  from studentexamanswer where  se.sid = #{sid} and  se.eid = #{eid}
+    </select>
+
+    <insert id="addSaqScore" parameterType="int">
+        insert into studentexamanswer (saqscore) values #{saqscore} where gid = {gid}
+    </insert>
 </mapper>

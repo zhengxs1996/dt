@@ -19,7 +19,12 @@ public class CorrectManageServiceImpl implements CorrectManageService {
     }
 
     @Override
-    public int findBySaqScore(Integer sid) {
-        return correctManageDao.findBySaqScore(sid);
+    public String findByfindBystudentanswer(Integer sid,Integer eid) {
+        return correctManageDao.findBystudentanswer(sid,eid);
+    }
+
+    @Override
+    public void addSaqScore(Integer gid) {
+         correctManageDao.addSaqScore(gid);
     }
 }

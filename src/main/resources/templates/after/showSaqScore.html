@@ -16,16 +16,63 @@
     <script type="text/javascript" th:src="@{/js/jquery-1.12.2.min.js}"></script>
 </head>
 <body>
+
+<form class="layui-form" action="">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">简答题总分</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入分数" class="layui-input">
+        </div>
+    </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
 <table class="layui-hide" id="studentTable" lay-filter="test"></table>
 
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="paper">批改</a>
-<!--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
+<!--    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="paper">提交</a>-->
+    <!--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
 </script>
 
 </div>
 <script type="text/html" id="indexTpl">
     {{d.LAY_TABLE_INDEX+1}}
+</script>
+<script type="text/javascript">
+    layui.use(['layer','form'],function () {
+        var layer = layui.layer
+            , form = layui.form
+
+        form.on('submit(save)', function (data) {
+            $.ajax({
+                type: "post",
+                url: "addSaqScore.do"+window.location.search,
+                data: data.field,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 0) {
+                        layer.msg("添加成功")
+                        var t = parent.layui.table;
+                        t.reload('studentTable');// 重新加载页面,demo 表示父窗体table标签的id值
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                    } else {
+                        layer.msg("添加分数")
+                    }
+                },
+                error: function () {
+                    layer.msg("ajax出错");
+                }
+            })
+            return false;
+        })
+    })
 </script>
 
 <script>
@@ -37,13 +84,12 @@
             , element = layui.element //元素操作
             , form = layui.form
 
-
         //执行一个 table 实例
         table.render({
             elem: '#studentTable'
             , height: 688
-            , url: 'StudentSCorrect.do' + window.location.search //数据接口
-            , title: '角色'
+            , url: 'Correct.do' + window.location.search //数据接口
+            , title: '试卷'
             , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'] //自定义分页布局
                 //,curr: 5 //设定初始在第 5 页
@@ -56,10 +102,10 @@
             , cols: [
                 [ //表头
                     {type: 'checkbox', fixed: 'left'}
-                    , {field: 'sid', align: 'center',title: 'sid', width: 100 , }
-                    , {field: 'eid', align: 'center',title: '考次', width: 100 , }
-                    , {field: 'sname', align: 'center', title: '学生姓名', width: 100}
-                    , {title: '操作', width: 200, align: 'center', toolbar: '#barDemo'}
+                    , {field: 'question', align: 'center',title: '问题', width: 100 , }
+                    , {field: 'anwer', align: 'center',title: '参考答案', width: 100 , }
+                    , {field: 'srtudentnwer', align: 'center',title: '学生答案', width: 100 , }
+                    // , {title: '操作', width: 200, align: 'center', toolbar: '#barDemo'}
                 ]
             ]
             , id: 'studentTable'
@@ -97,13 +143,12 @@
             var rowData = obj.data //获得当前行数据
                 , layEvent = obj.event //获得 lay-event 对应的值
                 , tr = obj.tr;
-
             if (layEvent === 'paper') {
                 layer.open({
                     type: 2,
                     title: '试卷',
                     area: ['90%', '90%'], //宽高
-                    content: "Correct?eid=" + obj.data.eid + "&sid=" + obj.data.sid //跳到新增页面
+                    content: "Correct?sid=" + data.sid,  //跳到新增页面
                 });
             }
         });

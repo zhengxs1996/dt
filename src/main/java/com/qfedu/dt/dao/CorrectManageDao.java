@@ -8,5 +8,7 @@ import java.util.List;
 public interface CorrectManageDao {
     public List<Studentexamanswer> findByStudent(Integer eId);
 
-    public int findBySaqScore(Integer sid);
+    public String findBystudentanswer(@Param("sid") Integer sid,
+                                      @Param("eid") Integer eid);
+    public void   addSaqScore(Integer sid);
 }

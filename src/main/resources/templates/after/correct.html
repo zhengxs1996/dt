@@ -75,14 +75,16 @@
                         }
                     }
                 })
-            }else if (obj.event === 'paper') {
+            }else
+             if (obj.event === 'paper') {
                 layer.open({
                     type: 2,
                     title: '试卷',
                     area: ['90%', '90%'], //宽高
                     content: "Student?eId=" + data.eId,  //跳到新增页面
                 });
-            } else if(obj.event === 'del'){
+            }
+             else if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
                     obj.del();
                     layer.close(index);
