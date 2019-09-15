@@ -25,7 +25,9 @@ public class BeforeLoginController {
 
         try {
             studentLoginService.studentLogin(name, password);
+            Integer sid = studentLoginService.findsid(name);
             map.put("name", name);
+            map.put("sid", sid);
             map.put("password", password);
             map.put("info", "登录成功");
 

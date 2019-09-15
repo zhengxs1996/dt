@@ -46,10 +46,9 @@ public class ApplyController {
 
     @ResponseBody
     @RequestMapping("/applyExam.do")
-    public JsonResult applyExam(Integer eId, String email){
+    public JsonResult applyExam(Integer eid, Integer sid){
 
-        Integer sId = scoreMamagerService.findIdByEmail(email);
-        Integer statue = applyService.applyExam(sId, eId);
+        Integer statue = applyService.applyExam(sid, eid);
         if (statue == 0){
             return new JsonResult(0,"报名成功");
         }else if(statue == 1){
@@ -58,4 +57,5 @@ public class ApplyController {
             return new JsonResult(2,"报名时间已过");
         }
     }
+
 }

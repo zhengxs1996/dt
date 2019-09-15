@@ -29,10 +29,10 @@ public class ExamController {
 
     @ResponseBody
     @RequestMapping("/findPaper.do")
-    public Map<String,Object> findPaper(Integer eId){
+    public Map<String,Object> findPaper(Integer eid){
         Map<String,Object> map = new HashMap<>();
-        String paper = examService.findPaper(eId).getPaper();
-        Integer totalTime = examService.findPaper(eId).getTotalTime();
+        String paper = examService.findPaper(eid).getPaper();
+        Integer totalTime = examService.findPaper(eid).getTotalTime();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
         map.put("info",paper);

@@ -17,18 +17,17 @@
 </head>
 <body>
 
-<form class="layui-form">
-
+<form>
     <div class="layui-form-item">
         <label class="layui-form-label">简答题总分</label>
         <div class="layui-input-block">
-            <input type="text" name="title" id="titlePid" th:name="score" lay-verify="title" autocomplete="off" placeholder="请输入分数" class="layui-input">
+            <input type="text" id="titlePid" name="score" lay-verify="title" autocomplete="off" placeholder="请输入分数（满分：30，每题 15 分）" class="layui-input">
         </div>
     </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button class="layui-btn" lay-submit="" lay-filter="demo1" onclick="up">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
@@ -45,6 +44,10 @@
     {{d.LAY_TABLE_INDEX+1}}
 </script>
 <script type="text/javascript">
+    
+    function up() {
+        layer.msg("提交成功");
+    }
 
     var gid;
 
@@ -74,7 +77,7 @@
             , cols: [
                 [ //表头
                     {type: 'checkbox', fixed: 'left'}
-                    , {field: 'gid', align: 'center',title: '问题', width: 100 , }
+                    , {field: 'gid', align: 'center',title: '试卷id', width: 100 , }
                     , {field: 'question', align: 'center',title: '问题', width: 100 , }
                     , {field: 'anwer', align: 'center',title: '参考答案', width: 300 , }
                     , {field: 'srtudentnwer', align: 'center',title: '学生答案', width: 300 , }
@@ -124,31 +127,31 @@
         });
     });
 
-    $("form").submit(function () {
-        var gid =  $("#titlePid").val();
-        $.ajax({
-            type: "get",
-            async:false,
-            url: "addSaqScore.do?gid=" + gid,
-            data: data.field,
-            dataType: "json",
-            success: function (data) {
-                if (data.code == 0) {
-                    layer.msg("添加成功")
-                    var t = parent.layui.table;
-                    t.reload('studentTable');// 重新加载页面,demo 表示父窗体table标签的id值
-                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                    parent.layer.close(index); //再执行关闭
-                } else {
-                    layer.msg("添加分数")
-                }
-            },
-            error: function () {
-                layer.msg("ajax出错");
-            }
-        })
-        return false;
-    })
+    // $("form").submit(function () {
+    //     var gid =  $("#titlePid").val();
+    //     $.ajax({
+    //         type: "get",
+    //         async:false,
+    //         url: "addSaqScore.do?gid=" + gid,
+    //         data: data.field,
+    //         dataType: "json",
+    //         success: function (data) {
+    //             if (data.code == 0) {
+    //                 layer.msg("添加成功")
+    //                 var t = parent.layui.table;
+    //                 t.reload('studentTable');// 重新加载页面,demo 表示父窗体table标签的id值
+    //                 var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+    //                 parent.layer.close(index); //再执行关闭
+    //             } else {
+    //                 layer.msg("添加分数")
+    //             }
+    //         },
+    //         error: function () {
+    //             layer.msg("ajax出错");
+    //         }
+    //     })
+    //     return false;
+    // })
 </script>
 </body>
 </html>

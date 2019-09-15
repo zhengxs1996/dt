@@ -7,4 +7,11 @@ public interface StudentLoginService {
      * @param password
      */
     public void studentLogin(String name, String password);
+
+    /**
+     * 找到登录学生的sid
+     * @param name 学生姓名
+     * @return 返回学生id
+     */
+    public Integer findsid(String name);
 }

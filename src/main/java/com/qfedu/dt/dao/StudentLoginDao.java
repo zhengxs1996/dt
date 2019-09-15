@@ -9,4 +9,11 @@ public interface StudentLoginDao {
      * @return 密码
      */
     public String findStudentPassword(@Param("email") String email);
+
+    /**
+     * 查找指定邮箱学生的sid
+     * @param email 学生邮箱
+     * @return 返回学生id
+     */
+    public Integer findsid(@Param("email") String email);
 }

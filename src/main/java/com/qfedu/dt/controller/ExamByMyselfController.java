@@ -24,10 +24,7 @@ public class ExamByMyselfController {
 
     @RequestMapping("/findExamByMyself")
     @ResponseBody
-    public Map<String, Object> findExamByMyself(Integer page, Integer limit, Student student) {
-        //获取学生所有报名参加的考试信息
-        int sid = student.getSid();
-//        sid = 19;
+    public Map<String, Object> findExamByMyself(Integer page, Integer limit, Integer sid) {
         List<ExamManage> list = examManageService.findExamByMyself(page, limit, sid);
         long total = ((Page) list).getTotal();
 

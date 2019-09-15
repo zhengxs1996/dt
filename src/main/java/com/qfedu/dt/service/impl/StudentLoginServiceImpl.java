@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class StudentLoginServiceImpl implements StudentLoginService {
 
-    @Autowired
+    @Autowired(required = false)
     private StudentLoginDao studentLoginDao;
 
     @Override
@@ -19,5 +19,10 @@ public class StudentLoginServiceImpl implements StudentLoginService {
         } else if (!studentPassword.equals(password)) {
             throw new RuntimeException("账号或者密码有误");
         }
+    }
+
+    @Override
+    public Integer findsid(String name) {
+        return studentLoginDao.findsid(name);
     }
 }
